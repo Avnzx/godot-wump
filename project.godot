@@ -28,6 +28,7 @@ config/icon="res://icon.png"
 [autoload]
 
 MouseSpeed="*res://scripts/util/mouse_speed.gd"
+SceneManager="*res://scripts/SceneManager.cs"
 
 [input]
 

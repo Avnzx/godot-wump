@@ -14,11 +14,12 @@ public class SceneManager : Node {
         SetProcessInternal(true);
         
         // only works for the last scene loaded (Autoloads > scenes)
-        //CurrentScene = root.GetChild(root.GetChildCount() - 1);
+        CurrentScene = root.GetChild(root.GetChildCount() - 1);
         //CurrentScene = this.GetChild(this.GetChildCount() - 1);
 
 
         GD.Print("Game loaded");
+        GD.Print(CurrentScene);
 
         var testEnv = TestEnvironment.From(OS.GetCmdlineArgs());
         if (testEnv.ShouldRunTests) {
@@ -35,9 +36,11 @@ public class SceneManager : Node {
         NextScene = ResourceLoader.Load<PackedScene>(path);
         // Instantiate and add
         CurrentScene = NextScene.Instance();
-        this.AddChild(CurrentScene);
+        root!.CallDeferred("add_child", CurrentScene);
         // + compat w/SceneTree.change_scene() API.
-        //GetTree().CurrentScene = CurrentScene; 
+        // Godot does not like non-root nodes being parents
+        // to current scenes
+        GetTree().CurrentScene = CurrentScene; 
     }
 
     public void DeferredRemoveScene(string path) {
