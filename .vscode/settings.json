@@ -1,0 +1,4 @@
+{
+    "godot_tools.editor_path": "/usr/bin/godot-mono",
+    "godot_tools.gdscript_lsp_server_port": 6090
+}

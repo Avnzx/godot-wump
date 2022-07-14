@@ -27,7 +27,7 @@ var y_rotation = 0
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	#fix rotation just in case
 	gimbal.orthonormalize()
 	#zoom smoothly

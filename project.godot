@@ -73,6 +73,7 @@ limits/debugger_stdout/max_warnings_per_second=500
 
 common/enable_pause_aware_picking=true
 2d/thread_model=2
+3d/default_gravity=-98.0
 
 [rendering]
 
