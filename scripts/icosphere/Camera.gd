@@ -1,9 +1,5 @@
 extends Spatial
 
-
-onready var functions = preload("res://scripts/util/spheregeom.gd").new()
-
-
 onready var gimbal = $Gimbal
 
 # mouse properties
@@ -51,6 +47,8 @@ func _unhandled_input(event):
 		_drag = false
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	
+	if event.is_action_pressed("toggle_map"):
+		SceneManager.DeferredGotoScene("res://scenes/world/world.tscn");
 	
 	if event.is_action_pressed("ui_zoom_in") and not _drag:
 		zoom_req -= 10

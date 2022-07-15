@@ -1,7 +1,6 @@
 extends Label
 
 # Declare member variables here. Examples:
-onready var functions = preload("res://scripts/util/spheregeom.gd").new()
 onready var raycast = RayCast.new()
 
 # Called when the node enters the scene tree for the first time.

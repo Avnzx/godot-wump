@@ -20,12 +20,19 @@ public class SceneManager : Node {
 
         GD.Print("Game loaded");
         GD.Print(CurrentScene);
-
+        
         var testEnv = TestEnvironment.From(OS.GetCmdlineArgs());
         if (testEnv.ShouldRunTests) {
             DeferredGotoScene("res://tests/test.tscn");
         } else {
+            // go to our default scene if there is an exception
+            // allow for going to other scenes in editor
             DeferredGotoScene("res://scenes/world/world.tscn");
+            try{
+                foreach (var item in OS.GetCmdlineArgs()) {
+                    DeferredGotoScene(item);
+                }
+            } catch {}
         }
 
     }
@@ -46,6 +53,25 @@ public class SceneManager : Node {
     public void DeferredRemoveScene(string path) {
         Node remscene = ResourceLoader.Load<Node>(path);
         remscene.QueueFree();
+    }
+
+    public void AddScene(string path){
+        PackedScene? _scene;
+        Node? _nextscene;
+        _scene = ResourceLoader.Load<PackedScene>(path);
+        _nextscene = _scene.Instance();
+
+        root!.CallDeferred("add_child", _nextscene);
+    }
+
+    // probably not a good idea (e.g. UI nodes)
+    public void RemoveLatestScene(){
+        Node? _scene = root!.GetChild(root.GetChildCount() - 1);
+        GD.Print(_scene);
+        GD.Print(root!.GetChild(root.GetChildCount()));
+        //_scene?.QueueFree();
+        GD.Print("attempted remove scene");
+        
     }
 
     // public void gotoscene("res::pathToScene", string array scenes to destroy, bool destroy all scenes)
