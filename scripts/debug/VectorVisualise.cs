@@ -54,11 +54,9 @@ class VectorVisualise : Control {
 
             var start = camera.UnprojectPosition(_obj.GlobalTransform.origin);
             var end = camera.UnprojectPosition(_obj.GlobalTransform.origin + (Vector3) _property * _scale);
-            GD.Print(start - end);
             DrawLine(start, end, _color, _width);
             DrawTriangle(end, start.DirectionTo(end), _width*2, _color);
         }
- 
         
     }
 
@@ -70,8 +68,5 @@ class VectorVisualise : Control {
         _newthing.Add(_prop);
         visualise_queue.Add(_newthing);
     }
-
-
-
 
 }

@@ -8,8 +8,17 @@ public class worldgeom : Node
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {	
-		SceneManager m_sceneManager = GetNode<SceneManager>("/root/SceneManager");
+		m_sceneManager = GetNode<SceneManager>("/root/SceneManager");
 		RoomFactory _factory = RoomFactory.Instance;
+
+		if (RoomFactory.IsInstanceValid(_factory)){
+			GD.Print("instance IS valid??");
+		} else {
+			GD.Print("instance INVALID :(");
+		}
+
+		
+		GD.Print(_factory);
 		AddChild(_factory,true);
 
 		_factory.Initialise(GetPath());
@@ -18,12 +27,14 @@ public class worldgeom : Node
 		_factory.NewRoom().Translation = Vector3.Left;
 		_factory.NewRoom();
 		
+		
 
 	}
 
     public override void _Input(InputEvent @event) {
 
 		if (Input.IsActionPressed("toggle_map")) {
+			GD.Print(m_sceneManager);
 			m_sceneManager!.DeferredGotoScene("res://scenes/icosphere/Main.tscn");
 		}
 

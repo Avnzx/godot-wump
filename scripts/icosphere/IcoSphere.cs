@@ -163,7 +163,9 @@ class IcoSphere : Node {
 
     public override void _Process(float delta) {
         viz!.AddVisQueue(_meshistc!, 
-            SphereGeom.calc_surface_normal_newell_method(single_face!));
+            SphereGeom.calc_surface_normal_newell_method(single_face!)*Vector3.NegOne);
+        
+        viz.AddVisQueue(_meshistc, Vector3.Up);
     }
 }
 	
