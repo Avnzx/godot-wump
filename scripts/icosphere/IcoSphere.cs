@@ -115,6 +115,13 @@ class IcoSphere : Node {
             mat.AlbedoColor = color;
             _array_mesh.SurfaceSetMaterial(i,mat);
         }
+
+        SpatialMaterial _mat = new SpatialMaterial();
+            var _color = new Color(1,1,1,1);
+
+            _mat.AlbedoColor = _color;
+            _array_mesh.SurfaceSetMaterial(0,_mat);
+
         
             
         
@@ -123,8 +130,7 @@ class IcoSphere : Node {
         // GD.Print( 
         //     SphereGeom.calc_surface_normal_newell_method(faces[0])
         //     ); 
-   
-        
+
         
         var mi = new MeshInstance();
         GD.Print(_array_mesh);
@@ -142,7 +148,22 @@ class IcoSphere : Node {
         //mi.material_override = preload("res://spheremat.tres")
 
         GD.Print(_array_mesh.GetSurfaceCount());
+
+        viz = new VectorVisualise(this);
+
+        single_face = (Vector3[]) faces[0];
+        _meshistc = mi;
+        GD.Print( _meshistc.GlobalTransform.origin );
     }
-	
+
+    VectorVisualise? viz;
+    MeshInstance? _meshistc; 
+
+    Vector3[]? single_face;
+
+    public override void _Process(float delta) {
+        viz!.AddVisQueue(_meshistc!, 
+            SphereGeom.calc_surface_normal_newell_method(single_face!));
+    }
 }
 	
