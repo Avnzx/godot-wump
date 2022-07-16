@@ -1,17 +1,10 @@
 using Godot;
 using System;
 
-public sealed class RoomFactory : Spatial {
-
-    // Singleton, ensure that it is only instantiated ONCE
-    private static readonly Lazy<RoomFactory> lazy =
-        new Lazy<RoomFactory>(() => new RoomFactory());
-
-    public static RoomFactory Instance { get { return lazy.Value; } }
-
+public class RoomFactory : Spatial {
 
     private RoomManager _manager = new RoomManager();
-	private RoomFactory() {
+	public RoomFactory() {
         this.Name = "RoomList";
     }
 
@@ -20,7 +13,11 @@ public sealed class RoomFactory : Spatial {
         _manager.Roomlist = this.GetPath();
     }
 
-    public MeshInstance NewRoom() {
+    public Room NewRoom() {
+
+		Room _room = new Room();
+		_room.Name = "hexroom";
+		this.AddChild(_room,true);
 
 		float _halfpolygon = CoordHelper.PolygonFlatToFlatDistance(6,15f); 
 
@@ -52,9 +49,18 @@ public sealed class RoomFactory : Spatial {
 			arrmesh1.SurfaceSetMaterial(i,mat);
 		}
 		arrmesh1.SurfaceSetMaterial(1,mat2);
-		this.AddChild(mi,true);
+		_room.AddChild(mi,true);
         mi.CreateConvexCollision();
-        return mi;
+
+		
+		ArrayMesh boundarrmesh =  CoordHelper.CreatePolygonMesh(vertices: 6, radius: 15f, thickness: 20f );
+		MeshInstance _bound = new MeshInstance();
+		_bound.Mesh = boundarrmesh;
+		_bound.Name = "room-bound";
+		_bound.Visible = false;
+		_room.AddChild(_bound,true);
+
+        return _room;
     }
 
 }

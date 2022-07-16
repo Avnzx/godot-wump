@@ -30,7 +30,8 @@ func _input(ev):
 func _physics_process(delta):
 	self.text = str("Mouse speed: %s" % MouseSpeed.get_instant_mouse_speed())
 	if(raycast.is_colliding()):
-		print(raycast.get_collider())
+		pass
+		#print(raycast.get_collider())
 
 
 

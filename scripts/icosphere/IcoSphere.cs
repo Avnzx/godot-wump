@@ -49,6 +49,22 @@ class IcoSphere : Node {
             return (common == 2);
     }
 
+    public bool is_adjacent( 
+        Vector3[] face1, Vector3[] face2) {
+            int common = 0;
+
+            // check for shared points
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++)
+                {
+                    if ( face1[i] == face2[j] ) {
+                        common ++;
+                    }
+                }
+            }
+            return (common == 2);
+    }
+
 
 
     public override void _Ready(){
@@ -92,9 +108,34 @@ class IcoSphere : Node {
         faces.Add(create_face(lla[3], lla[0], lla[7]));
 
 
-        //GD.Print( is_adjacent(faces[0],faces[1]) );
-        //GD.Print( is_adjacent(faces[2], faces[3]))
-        //print(faces[0][0] == faces[1][0])
+
+
+
+        GD.Print( is_adjacent( (Vector3[]) faces[0], (Vector3[]) faces[1]) );
+        GD.Print( is_adjacent( (Vector3[]) faces[2], (Vector3[]) faces[3]));
+
+
+        GameState _gamestate = GetNode<GameState>("/root/GameState");
+        // _gamestate.adjacency[1] = 1;
+
+        for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+            Godot.Collections.Array<int> _adj = new Godot.Collections.Array<int>();
+
+            for (int j = 0; j < _array_mesh.GetSurfaceCount(); j++) {
+                if(is_adjacent( (Vector3[]) faces[i], (Vector3[]) faces[j])){
+                    _adj.Add(j);
+                }
+            }
+            
+            _gamestate.adjacency![i] = _adj;
+        }
+
+        if (_gamestate.debugMode) {
+            // TODO: check for existence of adjacency and save compute
+            // by only calculating ONCE
+            GD.Print(_gamestate.adjacency);
+            GD.Print("adjacency graph created");
+        }
 
         //for face in faces:
         
@@ -149,23 +190,36 @@ class IcoSphere : Node {
 
         GD.Print(_array_mesh.GetSurfaceCount());
 
-        viz = new VectorVisualise(this);
+        VectorVisualise viz = new VectorVisualise(this);
 
-        single_face = (Vector3[]) faces[0];
-        _meshistc = mi;
+        Vector3[] single_face = (Vector3[]) faces[0];
+        MeshInstance _meshistc = mi;
         GD.Print( _meshistc.GlobalTransform.origin );
-    }
 
-    VectorVisualise? viz;
-    MeshInstance? _meshistc; 
-
-    Vector3[]? single_face;
-
-    public override void _Process(float delta) {
-        viz!.AddVisQueue(_meshistc!, 
-            SphereGeom.calc_surface_normal_newell_method(single_face!)*Vector3.NegOne);
+        // viz!.AddVisQueue(_meshistc!, 
+        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[0])*-Vector3.One);
         
-        viz.AddVisQueue(_meshistc, Vector3.Up);
+        // viz!.AddVisQueue(_meshistc!, 
+        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[7])*-Vector3.One);
+        
+        for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+            SpatialMaterial _materl =  (SpatialMaterial) _array_mesh.SurfaceGetMaterial(i);
+
+            viz!.AddVisQueue(_meshistc!, 
+                SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[i])*-Vector3.One,
+                _materl.AlbedoColor);
+        
+        }
+
+        
+
+        // viz.AddVisQueue(mi,
+        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[7])*-Vector3.One - 
+        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[0])*-Vector3.One
+        // );
+
+        //viz.AddVisQueue(_meshistc, Vector3.Up);
+
     }
 }
 	

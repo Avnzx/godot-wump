@@ -9,7 +9,7 @@ public class worldgeom : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {	
 		m_sceneManager = GetNode<SceneManager>("/root/SceneManager");
-		RoomFactory _factory = RoomFactory.Instance;
+		RoomFactory _factory = new RoomFactory();
 
 		if (RoomFactory.IsInstanceValid(_factory)){
 			GD.Print("instance IS valid??");

@@ -29,6 +29,7 @@ config/icon="res://icon.png"
 
 MouseSpeed="*res://scripts/util/mouse_speed.gd"
 SceneManager="*res://scripts/SceneManager.cs"
+GameState="*res://scripts/logic/GameState.cs"
 
 [input]
 

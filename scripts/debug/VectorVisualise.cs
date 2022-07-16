@@ -16,14 +16,11 @@ class VectorVisualise : Control {
     }
 
     // Draw (line, poly, etc...) calls can ONLY be made in this method
-    public override void _Draw() {
-        DrawQueue();
-    }
+    public override void _Draw() => DrawQueue();
+    
 
     // It schedules _Draw in a roundabout way
-    public override void _Process(float delta) {
-        Update();
-    }
+    public override void _Process(float delta) => Update();
 
 
     // Helper function
@@ -43,7 +40,6 @@ class VectorVisualise : Control {
     public void DrawQueue() {
 
         Camera camera = this.GetViewport().GetCamera();
-        Color _color = new Color(0,1,1,1);
         float _width = 10f;
         float _scale = 100f;
 
@@ -51,6 +47,7 @@ class VectorVisualise : Control {
             Godot.Collections.Array _arr = (Godot.Collections.Array) visualise_queue[i];
             Godot.Spatial _obj = (Godot.Spatial) _arr[0];
             Vector3 _property = (Vector3) _arr[1];
+            Color _color = (Color) _arr[2];
 
             var start = camera.UnprojectPosition(_obj.GlobalTransform.origin);
             var end = camera.UnprojectPosition(_obj.GlobalTransform.origin + (Vector3) _property * _scale);
@@ -66,7 +63,20 @@ class VectorVisualise : Control {
         Godot.Collections.Array _newthing = new Godot.Collections.Array();
         _newthing.Add(_obj);
         _newthing.Add(_prop);
+        _newthing.Add(new Color(0,1,1,1));
         visualise_queue.Add(_newthing);
     }
+
+    public void AddVisQueue(Godot.Spatial _obj, Vector3 _prop, Color _color) {
+        Godot.Collections.Array _newthing = new Godot.Collections.Array();
+        _newthing.Add(_obj);
+        _newthing.Add(_prop);
+        _newthing.Add(_color);
+        visualise_queue.Add(_newthing);
+    }
+
+    public void PopLastVisual() => visualise_queue.RemoveAt(visualise_queue.Count - 1);
+
+    public Godot.Collections.Array GetVisQueue() => visualise_queue;
 
 }
