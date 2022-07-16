@@ -109,36 +109,6 @@ class IcoSphere : Node {
 
 
 
-
-
-        GD.Print( is_adjacent( (Vector3[]) faces[0], (Vector3[]) faces[1]) );
-        GD.Print( is_adjacent( (Vector3[]) faces[2], (Vector3[]) faces[3]));
-
-
-        GameState _gamestate = GetNode<GameState>("/root/GameState");
-        // _gamestate.adjacency[1] = 1;
-
-        for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
-            Godot.Collections.Array<int> _adj = new Godot.Collections.Array<int>();
-
-            for (int j = 0; j < _array_mesh.GetSurfaceCount(); j++) {
-                if(is_adjacent( (Vector3[]) faces[i], (Vector3[]) faces[j])){
-                    _adj.Add(j);
-                }
-            }
-            
-            _gamestate.adjacency![i] = _adj;
-        }
-
-        if (_gamestate.debugMode) {
-            // TODO: check for existence of adjacency and save compute
-            // by only calculating ONCE
-            GD.Print(_gamestate.adjacency);
-            GD.Print("adjacency graph created");
-        }
-
-        //for face in faces:
-        
        _surfacetool.GenerateNormals();
        _surfacetool.GenerateTangents();
         
@@ -164,20 +134,12 @@ class IcoSphere : Node {
             _array_mesh.SurfaceSetMaterial(0,_mat);
 
         
-            
-        
-        
-        GD.Print(faces[0]);
-        // GD.Print( 
-        //     SphereGeom.calc_surface_normal_newell_method(faces[0])
-        //     ); 
-
-        
         var mi = new MeshInstance();
         GD.Print(_array_mesh);
         mi.Mesh = _array_mesh;
         AddChild(mi);
         
+        // TODO: Create proper collision
         // creates child StaticBody, parenting a CollisionShape (MeshInstance  -> StaticBody -> CollisionShape)
         mi.CreateTrimeshCollision();
         
@@ -196,12 +158,6 @@ class IcoSphere : Node {
         MeshInstance _meshistc = mi;
         GD.Print( _meshistc.GlobalTransform.origin );
 
-        // viz!.AddVisQueue(_meshistc!, 
-        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[0])*-Vector3.One);
-        
-        // viz!.AddVisQueue(_meshistc!, 
-        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[7])*-Vector3.One);
-        
         for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
             SpatialMaterial _materl =  (SpatialMaterial) _array_mesh.SurfaceGetMaterial(i);
 
@@ -211,15 +167,45 @@ class IcoSphere : Node {
         
         }
 
-        
-
-        // viz.AddVisQueue(mi,
-        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[7])*-Vector3.One - 
-        //     SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[0])*-Vector3.One
-        // );
-
-        //viz.AddVisQueue(_meshistc, Vector3.Up);
+        CreateAdjacencyGraph();     
 
     }
+
+    public void CreateAdjacencyGraph() {
+        GameState _gamestate = GetNode<GameState>("/root/GameState");
+
+        if (_gamestate.adjacency != null) {
+                GD.Print("adjacency graph already created");
+                return;
+        } else {
+            GD.Print("was not created");
+
+            _gamestate.adjacency = new Godot.Collections.Array();
+            _gamestate.adjacency.Resize(20);
+
+            for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+                Godot.Collections.Array<int> _adj = new Godot.Collections.Array<int>();
+
+                for (int j = 0; j < _array_mesh.GetSurfaceCount(); j++) {
+                    if(is_adjacent( (Vector3[]) faces[i], (Vector3[]) faces[j])){
+                        _adj.Add(j);
+                    }
+                }
+                
+                
+
+                _gamestate.adjacency![i] = _adj;
+            }
+
+            if (_gamestate.debugMode) {
+                // TODO: check for existence of adjacency and save compute
+                // by only calculating ONCE
+                GD.Print(_gamestate.adjacency);
+                GD.Print("adjacency graph created");
+            }
+        }
+    }
+
+
 }
 	
