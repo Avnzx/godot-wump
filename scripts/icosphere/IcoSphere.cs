@@ -152,11 +152,10 @@ class IcoSphere : Node {
 
         GD.Print(_array_mesh.GetSurfaceCount());
 
-        VectorVisualise viz = new VectorVisualise(this);
+        VectorVisualise viz = new VectorVisualise(mi);
 
         Vector3[] single_face = (Vector3[]) faces[0];
         MeshInstance _meshistc = mi;
-        GD.Print( _meshistc.GlobalTransform.origin );
 
         for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
             SpatialMaterial _materl =  (SpatialMaterial) _array_mesh.SurfaceGetMaterial(i);
@@ -167,7 +166,12 @@ class IcoSphere : Node {
         
         }
 
-        CreateAdjacencyGraph();     
+        CreateAdjacencyGraph();
+
+        GameState _gamestate = GetNode<GameState>("/root/GameState");
+
+        viz!.AddVisQueue(_meshistc!, Vector3.Up);
+
 
     }
 
@@ -208,4 +212,3 @@ class IcoSphere : Node {
 
 
 }
-	

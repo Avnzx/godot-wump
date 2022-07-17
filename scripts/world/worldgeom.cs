@@ -11,24 +11,51 @@ public class worldgeom : Node
 		m_sceneManager = GetNode<SceneManager>("/root/SceneManager");
 		RoomFactory _factory = new RoomFactory();
 
-		if (RoomFactory.IsInstanceValid(_factory)){
-			GD.Print("instance IS valid??");
-		} else {
-			GD.Print("instance INVALID :(");
-		}
-
 		
 		GD.Print(_factory);
 		AddChild(_factory,true);
 
+		_halfpolygon = CoordHelper.PolygonFlatToFlatDistance(6,15f);
+		_threetwothpoly = _halfpolygon * (3f/2f);
+
 		_factory.Initialise(GetPath());
 		GD.Print(GetPath());
-		_factory.NewRoom();
-		_factory.NewRoom().Translation = Vector3.Left;
-		_factory.NewRoom();
-		
-		
 
+
+		if (!_isflipped) {
+			// centre
+			_roomList![0] = _factory.NewRoom();
+			//top
+			_roomList[1] = _factory.IllusionRoom();
+			_roomList[1].Translation = Vector3.Forward * _halfpolygon;
+			// bottom right
+			_roomList[2] = _factory.IllusionRoom();
+			_roomList[2].Translation = new Vector3(15f*1.5f,0,_halfpolygon/2f);
+			//bottom left
+			_roomList[3] = _factory.IllusionRoom();
+			_roomList[3].Translation = new Vector3(-15f*1.5f,0,_halfpolygon/2f);
+		} else {
+			// centre
+			_roomList![0] = _factory.NewRoom();
+			// bottom
+			_roomList[1] = _factory.IllusionRoom();
+			_roomList[1].Translation = -Vector3.Forward * _halfpolygon;
+			// top right
+			_roomList[2] = _factory.IllusionRoom();
+			_roomList[2].Translation = new Vector3(15f*1.5f,0,-_halfpolygon/2f);
+			// top left
+			_roomList[3] = _factory.IllusionRoom();
+			_roomList[3].Translation = new Vector3(-15f*1.5f,0,-_halfpolygon/2f);
+
+		}
+		
+		// _factory.RemoveRoom(_roomList[1]);
+		_factory.RemoveRoomGroup(_roomList);
+
+	}
+
+	public void CreateRoomGroup() {
+		
 	}
 
     public override void _Input(InputEvent @event) {
@@ -41,7 +68,13 @@ public class worldgeom : Node
 
     }
 
+	[Export]
+	public bool _isflipped = true;
+
+	private Room[]? _roomList = new Room[4];
+
 	private float _halfpolygon;
+	private float _threetwothpoly;
 
 
 }

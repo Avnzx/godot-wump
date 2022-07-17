@@ -73,6 +73,10 @@ toggle_map={
  ]
 }
 
+[layer_names]
+
+3d_physics/layer_2="player"
+
 [network]
 
 limits/debugger_stdout/max_chars_per_second=200000
