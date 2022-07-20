@@ -7,6 +7,7 @@ public class RoomFactory : Spatial {
     private RoomManager _manager = new RoomManager();
 	public RoomFactory() {
         this.Name = "RoomList";
+		_halfpolygon = CoordHelper.PolygonFlatToFlatDistance(6,15f);
     }
 
     public void Initialise(NodePath path) {
@@ -144,5 +145,41 @@ public class RoomFactory : Spatial {
 			remove[i].QueueFree();
 					}
 	}
+
+	public CustRoom[] CreateRoomGroup(bool isflipped = false) {
+		CustRoom[] _roomList = new CustRoom[4];
+
+		if (!isflipped) {
+				// centre
+				_roomList![0] = this!.NewRoom();
+				// bottom
+				_roomList[1] = this.IllusionRoom();
+				_roomList[1].Translation = Vector3.Forward * _halfpolygon;
+				// top left
+				_roomList[2] = this.IllusionRoom();
+				_roomList[2].Translation = new Vector3(15f*1.5f,0,_halfpolygon/2f);
+				// top right
+				_roomList[3] = this.IllusionRoom();
+				_roomList[3].Translation = new Vector3(-15f*1.5f,0,_halfpolygon/2f);
+			} else {
+				// centre
+				_roomList![0] = this!.NewRoom();
+				// top
+				_roomList[1] = this.IllusionRoom();
+				_roomList[1].Translation = -Vector3.Forward * _halfpolygon;
+				// bottom left
+				_roomList[2] = this.IllusionRoom();
+				_roomList[2].Translation = new Vector3(15f*1.5f,0,-_halfpolygon/2f);
+				// bottom right
+				_roomList[3] = this.IllusionRoom();
+				_roomList[3].Translation = new Vector3(-15f*1.5f,0,-_halfpolygon/2f);
+
+			}
+
+		return _roomList;
+	}
+
+	private float _halfpolygon;
+
 
 }
