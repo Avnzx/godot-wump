@@ -14,11 +14,11 @@ current = true
 size = 40.0
 far = 1000.0
 
-[node name="KinematicBody" parent="." instance=ExtResource( 2 )]
+[node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 
 [node name="Camera2" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.43587, 26.1273, -12.8832 )
+transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 26.127, 0 )
 projection = 1
 size = 142.04
 

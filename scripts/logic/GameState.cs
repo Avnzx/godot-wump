@@ -18,6 +18,11 @@ public class GameState : Node {
 
     }
 
+    public override void _Ready()
+    {
+        base._Ready();
+    }
+
 
 
 

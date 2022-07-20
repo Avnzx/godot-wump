@@ -6,6 +6,7 @@ public class playercontroller : KinematicBody {
     {
         m_camera = GetNode<Camera>("../Camera");
         m_body = this;
+        this.Name = "Player";
     }
 
     // public override void _UnhandledInput(InputEvent @event) {

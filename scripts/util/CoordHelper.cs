@@ -107,6 +107,31 @@ public class CoordHelper : Node
 		
 	}
 
+    public static Vector3[] CreatePolygonVertices(int vertices = 6, float thickness = 2f, float radius = 10f, float offset = 0f) {
+		float[]? _radian_points = CoordHelper.polygon_point_rad(vertices, offset);
+		ArrayMesh _arraymesh = new ArrayMesh();
+		
+		
+
+		Godot.Collections.Array<Vector3> _total =
+			new Godot.Collections.Array<Vector3>();
+
+		// convert degrees to 3d vectors
+		for( int i = 0; i<vertices ; i++ ){
+			Vector2 point = CoordHelper.rad_to_xy(_radian_points[i], radius);
+			_total.Add(CoordHelper.vec2_to_vec3Y(point));
+			_total.Add(CoordHelper.vec2_to_vec3Y(point,thickness));	
+		}
+
+		// Save some memory
+		_radian_points = null;
+
+        Vector3[] arr = new Vector3[_total.Count];
+        _total.CopyTo(arr,0);
+
+		return arr;
+	}
+
     public static float PolygonFlatToFlatDistance(int vertices, float radius) =>
         (2f * radius * Mathf.Cos(Mathf.Pi / (float) vertices));
 
