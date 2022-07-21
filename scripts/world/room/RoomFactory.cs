@@ -66,9 +66,9 @@ public class RoomFactory : Spatial {
     }
 
 
-	public CustRoom IllusionRoom() {
+	public CustRoom IllusionRoom(int drawnorder) {
 
-		CustRoom _room = new CustRoom();
+		CustRoom _room = new CustRoom(drawnorder);
 		_room.Name = "fakeroom";
 		this.AddChild(_room,true);
 
@@ -149,30 +149,30 @@ public class RoomFactory : Spatial {
 	public CustRoom[] CreateRoomGroup(bool isflipped = false) {
 		CustRoom[] _roomList = new CustRoom[4];
 
-		if (!isflipped) {
+		if (isflipped) {
 				// centre
 				_roomList![0] = this!.NewRoom();
 				// bottom
-				_roomList[1] = this.IllusionRoom();
+				_roomList[1] = this.IllusionRoom(1);
 				_roomList[1].Translation = Vector3.Forward * _halfpolygon;
 				// top left
-				_roomList[2] = this.IllusionRoom();
+				_roomList[2] = this.IllusionRoom(2);
 				_roomList[2].Translation = new Vector3(15f*1.5f,0,_halfpolygon/2f);
 				// top right
-				_roomList[3] = this.IllusionRoom();
+				_roomList[3] = this.IllusionRoom(3);
 				_roomList[3].Translation = new Vector3(-15f*1.5f,0,_halfpolygon/2f);
 			} else {
 				// centre
 				_roomList![0] = this!.NewRoom();
 				// top
-				_roomList[1] = this.IllusionRoom();
+				_roomList[1] = this.IllusionRoom(1);
 				_roomList[1].Translation = -Vector3.Forward * _halfpolygon;
-				// bottom left
-				_roomList[2] = this.IllusionRoom();
-				_roomList[2].Translation = new Vector3(15f*1.5f,0,-_halfpolygon/2f);
 				// bottom right
-				_roomList[3] = this.IllusionRoom();
-				_roomList[3].Translation = new Vector3(-15f*1.5f,0,-_halfpolygon/2f);
+				_roomList[2] = this.IllusionRoom(2);
+				_roomList[2].Translation = new Vector3(-15f*1.5f,0,-_halfpolygon/2f);
+				// bottom left
+				_roomList[3] = this.IllusionRoom(3);
+				_roomList[3].Translation = new Vector3(15f*1.5f,0,-_halfpolygon/2f);
 
 			}
 

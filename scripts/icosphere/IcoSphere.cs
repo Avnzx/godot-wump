@@ -68,7 +68,6 @@ class IcoSphere : Node {
 
 
     public override void _Ready(){
-        // Functions.Call();
        _surfacetool.Begin(Mesh.PrimitiveType.Triangles);
 
         Vector3[] lla = {
@@ -108,71 +107,66 @@ class IcoSphere : Node {
         faces.Add(create_face(lla[3], lla[0], lla[7]));
 
 
-
-       _surfacetool.GenerateNormals();
-       _surfacetool.GenerateTangents();
-        
-        //var mat = preload("res://spheremat.tres")
-        RandomNumberGenerator rng = new RandomNumberGenerator();
-
-        for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
-            SpatialMaterial mat = new SpatialMaterial();
-            var color = new Color(
-                rng.RandfRange(0.5f, 1.0f), 
-                rng.RandfRange(0.2f, 1.0f), 
-                rng.RandfRange(0.7f, 1.0f),1
-            );
-
-            mat.AlbedoColor = color;
-            _array_mesh.SurfaceSetMaterial(i,mat);
-        }
-
-        SpatialMaterial _mat = new SpatialMaterial();
-            var _color = new Color(1,1,1,1);
-
-            _mat.AlbedoColor = _color;
-            _array_mesh.SurfaceSetMaterial(0,_mat);
-
-        
-        var mi = new MeshInstance();
-        GD.Print(_array_mesh);
-        mi.Mesh = _array_mesh;
-        AddChild(mi);
-        
-        // TODO: Create proper collision
-        // creates child StaticBody, parenting a CollisionShape (MeshInstance  -> StaticBody -> CollisionShape)
-        mi.CreateTrimeshCollision();
-        
-        
-        var collider = new ConcavePolygonShape();
-        var staticbody = new StaticBody();
-        mi.AddChild(staticbody);
-        //staticbody.add_child(collider)
-        //mi.material_override = preload("res://spheremat.tres")
-
-        GD.Print(_array_mesh.GetSurfaceCount());
-
-        VectorVisualise viz = new VectorVisualise(mi);
-
-        Vector3[] single_face = (Vector3[]) faces[0];
-        MeshInstance _meshistc = mi;
-
-        for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
-            SpatialMaterial _materl =  (SpatialMaterial) _array_mesh.SurfaceGetMaterial(i);
-
-            viz!.AddVisQueue(_meshistc!, 
-                SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[i])*-Vector3.One,
-                _materl.AlbedoColor);
-        
-        }
-
         CreateAdjacencyGraph();
+        CreateShape();
 
-        GameState _gamestate = GetNode<GameState>("/root/GameState");
+    }
+
+    public void CreateShape() {
+        _surfacetool.GenerateNormals();
+        _surfacetool.GenerateTangents();
+            
+            //var mat = preload("res://spheremat.tres")
+            RandomNumberGenerator rng = new RandomNumberGenerator();
+
+            for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+                SpatialMaterial mat = new SpatialMaterial();
+                var color = new Color(
+                    rng.RandfRange(0.5f, 1.0f), 
+                    rng.RandfRange(0.2f, 1.0f), 
+                    rng.RandfRange(0.7f, 1.0f),1
+                );
+
+                mat.AlbedoColor = color;
+                _array_mesh.SurfaceSetMaterial(i,mat);
+            }
+
+            SpatialMaterial _mat = new SpatialMaterial();
+                var _color = new Color(1,1,1,1);
+
+                _mat.AlbedoColor = _color;
+                _array_mesh.SurfaceSetMaterial(0,_mat);
+
+            
+            var mi = new MeshInstance();
+            GD.Print(_array_mesh);
+            mi.Mesh = _array_mesh;
+            AddChild(mi);
+            
+            // TODO: Create proper collision
+            // creates child StaticBody, parenting a CollisionShape (MeshInstance  -> StaticBody -> CollisionShape)
+            mi.CreateTrimeshCollision();
+            
+            
+            var collider = new ConcavePolygonShape();
+            var staticbody = new StaticBody();
+            mi.AddChild(staticbody);
+
+            VectorVisualise viz = new VectorVisualise(mi);
+
+            Vector3[] single_face = (Vector3[]) faces[0];
+            MeshInstance _meshistc = mi;
+
+            for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+                SpatialMaterial _materl =  (SpatialMaterial) _array_mesh.SurfaceGetMaterial(i);
+
+                viz!.AddVisQueue(_meshistc!, 
+                    SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[i])*-Vector3.One,
+                    _materl.AlbedoColor);
+            
+            }
 
         viz!.AddVisQueue(_meshistc!, Vector3.Up);
-
-
     }
 
     public void CreateAdjacencyGraph() {

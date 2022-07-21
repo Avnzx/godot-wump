@@ -18,8 +18,9 @@ far = 1000.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 
 [node name="Camera2" type="Camera" parent="."]
-transform = Transform( -1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0, 26.127, 0 )
+transform = Transform( -1, -8.74228e-08, -3.82137e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 0, 26.127, 0 )
 projection = 1
+current = true
 size = 142.04
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]

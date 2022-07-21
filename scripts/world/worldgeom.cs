@@ -9,21 +9,44 @@ public class worldgeom : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {	
 		m_sceneManager = GetNode<SceneManager>("/root/SceneManager");
+		GameState _gamestate = GetNode<GameState>("/root/GameState");
 		RoomFactory _factory = new RoomFactory();
 
-		
-		GD.Print(_factory);
 		AddChild(_factory,true);
-
-
-
 		_factory.Initialise(GetPath());
-		GD.Print(GetPath());
 
+
+		// TODO: remove, only for debugging
 		_isflipped = true;
 
+		//prevRoom = new int[2] {3,1};
 
-		_roomList = _factory.CreateRoomGroup();
+		// create roomgroup
+		_roomList = _factory.CreateRoomGroup(_isflipped);
+
+		if (prevRoom == null && _gamestate.adjacency != null) {
+			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
+			for (int i = 1; i < (_roomList.Length); i++) {
+				_roomList[i].roomindex = (int) arr[i-1];
+			}
+		} else if (_gamestate.adjacency != null) {
+			GD.Print(prevRoom);
+			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
+
+			int previousroom = arr.IndexOf(prevRoom![1]);
+
+			int[] ordered = new int[3];
+			ordered[prevRoom![0] - 1] = (int) arr[previousroom % 3];
+			ordered[(prevRoom[0] % 3)] = (int) arr[previousroom + 1 % 3];
+			ordered[((prevRoom[0] + 1) % 3)] = (int) arr[previousroom + 2 % 3];
+
+			GD.Print(ordered);
+
+			for (int i = 0; i < ordered.Length; i++) {
+				_roomList[i+1].roomindex = ordered[i];
+			}
+
+		}
 		
 		// _factory.RemoveRoom(_roomList[1]);
 		// _factory.RemoveRoomGroup(_roomList);
@@ -40,9 +63,13 @@ public class worldgeom : Node
     }
 
 	[Export]
-	public bool _isflipped = true;
+	public bool _isflipped = false;
+
+	// direction + roomidx
+	private int[]? prevRoom; 
 
 	private CustRoom[]? _roomList = new CustRoom[4];
 
 	private RoomFactory? _factory;
+	private GameState? _gamestate;
 }
