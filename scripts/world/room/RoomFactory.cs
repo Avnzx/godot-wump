@@ -143,7 +143,7 @@ public class RoomFactory : Spatial {
 		for (int i = 0; i < remove.Length; i++) {
 			this.RemoveChild(remove[i]);
 			remove[i].QueueFree();
-					}
+		}
 	}
 
 	public CustRoom[] CreateRoomGroup(bool isflipped = false) {

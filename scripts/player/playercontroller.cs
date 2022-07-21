@@ -5,7 +5,7 @@ public class playercontroller : KinematicBody {
     public override void _Ready() {
         m_camera = GetNode<Camera>("../Camera");
         // FIXME: REMOVE after debugging
-        m_camera = GetNode<Camera>("../Camera2");
+        // m_camera = GetNode<Camera>("../Camera2");
 
         m_body = this;
         this.Name = "Player";

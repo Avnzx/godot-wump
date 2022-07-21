@@ -9,16 +9,33 @@ public class worldgeom : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {	
 		m_sceneManager = GetNode<SceneManager>("/root/SceneManager");
-		GameState _gamestate = GetNode<GameState>("/root/GameState");
-		RoomFactory _factory = new RoomFactory();
+		_gamestate = GetNode<GameState>("/root/GameState");
+		_factory = new RoomFactory();
 
-		AddChild(_factory,true);
+		this.Name = "worldgeom";
+
+		AddChild(_factory,true); 
 		_factory.Initialise(GetPath());
 
+		CreateRoomGroup();
+		// _factory.RemoveRoom(_roomList[1]);
+		// _factory.RemoveRoomGroup(_roomList);
+	}
 
-		// TODO: remove, only for debugging
-		_isflipped = true;
+	public void HandleRoomDetector(Godot.Collections.Array arr) {
+		Vector3 localtranslation = (Vector3) arr[3];
+		
+		// _factory.RemoveRoom(_roomList[2]);
+		_oldRooms = _roomList;
+		_roomList = null;
+		_factory.RemoveRoomGroup(_oldRooms);
 
+		_factory.Translation = _factory.Translation + (localtranslation*0.9f);
+		CreateRoomGroup();
+	}
+
+	public void CreateRoomGroup() {
+		
 		//prevRoom = new int[2] {3,1};
 
 		// create roomgroup
@@ -47,9 +64,9 @@ public class worldgeom : Node
 			}
 
 		}
-		
-		// _factory.RemoveRoom(_roomList[1]);
-		// _factory.RemoveRoomGroup(_roomList);
+
+		// flip next room
+		_isflipped = !_isflipped;
 	}
 
     public override void _Input(InputEvent @event) {
@@ -69,6 +86,7 @@ public class worldgeom : Node
 	private int[]? prevRoom; 
 
 	private CustRoom[]? _roomList = new CustRoom[4];
+	private CustRoom[]? _oldRooms = new CustRoom[4];
 
 	private RoomFactory? _factory;
 	private GameState? _gamestate;
