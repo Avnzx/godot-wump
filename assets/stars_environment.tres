@@ -1,0 +1,24 @@
+[gd_resource type="Environment" load_steps=3 format=2]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://.import/sky_seamless_texture_5904.jpg-5347084fd9ca296efb07adce2272c008.stex"
+
+[sub_resource type="PanoramaSky" id=2]
+radiance_size = 0
+panorama = SubResource( 1 )
+
+[resource]
+background_mode = 2
+background_sky = SubResource( 2 )
+background_sky_custom_fov = 60.3
+ambient_light_color = Color( 0.380392, 0.329412, 0.329412, 1 )
+ambient_light_sky_contribution = 0.78
+tonemap_mode = 2
+auto_exposure_enabled = true
+auto_exposure_max_luma = 3.0
+glow_enabled = true
+glow_intensity = 1.15
+glow_strength = 0.35
+glow_hdr_scale = 2.33
+glow_high_quality = true
