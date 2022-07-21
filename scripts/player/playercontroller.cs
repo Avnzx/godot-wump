@@ -85,11 +85,11 @@ public class playercontroller : KinematicBody {
 
     [Export]
     private float m_maxVelAngle = (float) (1f/3f);
-    private const float m_speed = 7;
+    private const float m_speed = 10;
     [Export]
     private float m_deaccel = 0.2f;
     [Export]
-    private float m_accel = 0.2f;
+    private float m_accel = 0.1f;
 
     
 
