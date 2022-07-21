@@ -40,10 +40,10 @@ func _process(_delta):
 
 func _unhandled_input(event):
 	# set a variable and change cursor
-	if (event is InputEventMouseButton and event.button_mask == BUTTON_MASK_LEFT):
+	if (event is InputEventMouseButton and event.button_mask == BUTTON_MASK_RIGHT):
 		_drag = true
 		Input.set_default_cursor_shape(Input.CURSOR_DRAG)
-	if (event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.pressed):
+	if (event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and not event.pressed):
 		_drag = false
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	

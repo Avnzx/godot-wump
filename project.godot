@@ -76,6 +76,7 @@ toggle_map={
 [layer_names]
 
 3d_physics/layer_2="player"
+3d_physics/layer_3="icosphere_faces"
 
 [network]
 

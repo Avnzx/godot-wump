@@ -23,8 +23,6 @@ public class RoomFactory : Spatial {
 
 		float _halfpolygon = CoordHelper.PolygonFlatToFlatDistance(6,15f); 
 
-		// TODO: add a proper collider
-
 		var color = new Color(
 				(float) GD.RandRange(0.1, 1.0), 
 				(float) GD.RandRange(0.1, 1.0), 

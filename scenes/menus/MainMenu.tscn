@@ -1,4 +1,15 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_vertex_lighting = true
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_disable_ambient_light = true
+albedo_color = Color( 0.686275, 0.654902, 0.717647, 1 )
+roughness = 0.62
+clearcoat_enabled = true
+clearcoat = 0.83
+clearcoat_gloss = 0.67
 
 [node name="Spatial" type="Spatial"]
 
@@ -7,20 +18,23 @@ transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -2.29011, 0
 
 [node name="CSGBox" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-width = 6.0
-depth = 6.0
+width = 7.454
+height = 1.593
+depth = 5.858
+material = SubResource( 1 )
 
 [node name="CSGBox" type="CSGBox" parent="CSGBox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0460715, 1.58279, -2.70092 )
-width = 6.0
+width = 7.454
 height = 5.15782
-depth = 0.657439
+depth = 0.023
+material = SubResource( 2 )
 
 [node name="CSGBox" type="CSGBox" parent="CSGBox/CSGBox"]
 transform = Transform( 0.0304862, 0, -0.999535, 0, 1, 0, 0.999535, 0, 0.0304862, 2.61414, -0.10704, 2.91418 )
-width = 6.0
+width = 7.454
 height = 4.79101
-depth = 0.657439
+depth = 0.023
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.5, 0.224144, -0.836516, 0, 0.965926, 0.258819, 0.866025, -0.12941, 0.482963, -1, 4, 6 )

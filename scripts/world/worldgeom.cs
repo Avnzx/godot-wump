@@ -65,6 +65,9 @@ public class worldgeom : Node
 
 		}
 
+		if(_gamestate.debugMode)
+			GD.Print(_gamestate.CurrentPlayerRoom);
+
 		// flip next room
 		_isflipped = !_isflipped;
 	}
@@ -75,7 +78,6 @@ public class worldgeom : Node
 			GD.Print(m_sceneManager);
 			m_sceneManager!.DeferredGotoScene("res://scenes/icosphere/Main.tscn");
 		}
-
 
     }
 

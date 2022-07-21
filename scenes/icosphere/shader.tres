@@ -1,8 +1,8 @@
 [gd_resource type="Shader" format=2]
 
 [resource]
-code = "shader_type canvas_item;
+code = "shader_type spatial;
 
-void fragment(){
+void vertex(){
 	COLOR = vec4(0.4, 0.6, 0.9, 1.0);
 }"

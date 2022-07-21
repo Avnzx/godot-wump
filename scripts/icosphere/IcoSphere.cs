@@ -5,6 +5,8 @@ class IcoSphere : Node {
     private ArrayMesh _array_mesh = new ArrayMesh();
     private SurfaceTool _surfacetool = new SurfaceTool();
     Godot.Collections.Array faces = new Godot.Collections.Array();
+    private Godot.Collections.Array facecolliders = new Godot.Collections.Array();
+
 
 
     public Vector3[] create_face(Vector3 lla0, Vector3 lla1, Vector3 lla2) {
@@ -143,30 +145,49 @@ class IcoSphere : Node {
             mi.Mesh = _array_mesh;
             AddChild(mi);
             
-            // TODO: Create proper collision
-            // creates child StaticBody, parenting a CollisionShape (MeshInstance  -> StaticBody -> CollisionShape)
-            mi.CreateTrimeshCollision();
+
+            // go through each face and create a new ConcaveCollision
+            // Shape for them, allowing the faces to be selected
+            for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+                Vector3[] surface = (Vector3[]) _array_mesh.SurfaceGetArrays(i)[0];
+
+                StaticBody surfacebody = new StaticBody();
+                surfacebody.Name = "facestaticbody";
+                this.AddChild(surfacebody,true);
+
+                facecolliders.Add(surfacebody);
+
+                Vector3[] shapepoints = new Vector3[3];
+                surface.CopyTo(shapepoints,0);
+
+                ConcavePolygonShape collidershape = new ConcavePolygonShape();
+                collidershape.Data = shapepoints;
+                
+                uint shapeowner = surfacebody.CreateShapeOwner(surfacebody);
+                surfacebody.ShapeOwnerAddShape(shapeowner, collidershape);
+
+            }
             
             
             var collider = new ConcavePolygonShape();
             var staticbody = new StaticBody();
-            mi.AddChild(staticbody);
+            // mi.AddChild(staticbody);
 
-            VectorVisualise viz = new VectorVisualise(mi);
+            // VectorVisualise viz = new VectorVisualise(mi);
 
-            Vector3[] single_face = (Vector3[]) faces[0];
-            MeshInstance _meshistc = mi;
+            // Vector3[] single_face = (Vector3[]) faces[0];
+            // MeshInstance _meshistc = mi;
 
-            for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
-                SpatialMaterial _materl =  (SpatialMaterial) _array_mesh.SurfaceGetMaterial(i);
+            // for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+            //     SpatialMaterial _materl =  (SpatialMaterial) _array_mesh.SurfaceGetMaterial(i);
 
-                viz!.AddVisQueue(_meshistc!, 
-                    SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[i])*-Vector3.One,
-                    _materl.AlbedoColor);
+            //     viz!.AddVisQueue(_meshistc!, 
+            //         SphereGeom.calc_surface_normal_newell_method((Vector3[]) faces[i])*-Vector3.One,
+            //         _materl.AlbedoColor);
             
-            }
+            // }
 
-        viz!.AddVisQueue(_meshistc!, Vector3.Up);
+        // viz!.AddVisQueue(_meshistc!, Vector3.Up);
     }
 
     public void CreateAdjacencyGraph() {
@@ -204,8 +225,7 @@ class IcoSphere : Node {
         }
     }
 
-
-    
+       
 
 
 }
