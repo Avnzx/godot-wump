@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public sealed class IcoSphere : Node {
-    private ArrayMesh _array_mesh = new ArrayMesh();
+public class IcoSphere : Node {
+    public ArrayMesh _array_mesh = new ArrayMesh();
     private SurfaceTool _surfacetool = new SurfaceTool();
     Godot.Collections.Array faces = new Godot.Collections.Array();
-    private Godot.Collections.Array facecolliders = new Godot.Collections.Array();
+    public Godot.Collections.Array facecolliders = new Godot.Collections.Array();
     IcoSphereGeom _geometry = new IcoSphereGeom();
 
     public IcoSphere(){
-        GD.Print(_geometry.faces);
+        // GD.Print(_geometry.faces);
     }
 
 
@@ -61,7 +61,10 @@ public sealed class IcoSphere : Node {
         _surfacetool.GenerateTangents();
 
         for (int i = 0; i < faces.Count; i++) {
+            // disable the warning, it is inaccurate
+            #pragma warning disable CS8604
             create_face(faces[i] as Godot.Vector3[]);
+            #pragma warning restore CS8604
         }
 
             
@@ -81,11 +84,14 @@ public sealed class IcoSphere : Node {
         }
 
         SpatialMaterial _mat = new SpatialMaterial();
-            var _color = new Color(1,1,1,1);
+            var _color = new Color(0.4f,0.1f,0.7f,0.4f);
 
             _mat.AlbedoColor = _color;
             _array_mesh.SurfaceSetMaterial(0,_mat);
 
+        for (int i = 0; i < _array_mesh.GetSurfaceCount(); i++) {
+            _array_mesh.SurfaceSetMaterial(i,_mat);
+        }
         
         var mi = new MeshInstance();
         GD.Print(_array_mesh);
@@ -136,6 +142,9 @@ public sealed class IcoSphere : Node {
 
     // viz!.AddVisQueue(_meshistc!, Vector3.Up);
     }
+
+
+
 
        
 
