@@ -24,11 +24,17 @@ public class worldgeom : Node
 
 	public void HandleRoomDetector(Godot.Collections.Array arr) {
 		Vector3 localtranslation = (Vector3) arr[3];
+
+		GD.Print(arr);
+
+		prevRoom = new int[2];
+		prevRoom[0] = (int) arr[0];
+		prevRoom[1] = (int) arr[1];
 		
 		// _factory.RemoveRoom(_roomList[2]);
 		_oldRooms = _roomList;
 		_roomList = null;
-		_factory.RemoveRoomGroup(_oldRooms);
+		_factory!.RemoveRoomGroup(_oldRooms!);
 
 		_factory.Translation = _factory.Translation + (localtranslation*0.9f);
 		CreateRoomGroup();
@@ -39,16 +45,20 @@ public class worldgeom : Node
 		//prevRoom = new int[2] {3,1};
 
 		// create roomgroup
-		_roomList = _factory.CreateRoomGroup(_isflipped);
+		_roomList = _factory!.CreateRoomGroup(_isflipped);
+
+		if (_gamestate!.adjacency == null) {
+			CreateRoomGroup();
+		} else if (_gamestate.adjacency[0] == null )
+			CreateRoomGroup();
 
 
-		if (prevRoom == null && _gamestate.adjacency[0] != null) {
-			GD.Print(_gamestate.adjacency);
+		if (prevRoom == null) {
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 			for (int i = 1; i < (_roomList.Length); i++) {
 				_roomList[i].roomindex = (int) arr[i-1];
 			}
-		} else if (_gamestate.adjacency[0] != null) {
+		} else {
 			GD.Print(prevRoom);
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 
@@ -56,8 +66,8 @@ public class worldgeom : Node
 
 			int[] ordered = new int[3];
 			ordered[prevRoom![0] - 1] = (int) arr[previousroom % 3];
-			ordered[(prevRoom[0] % 3)] = (int) arr[previousroom + 1 % 3];
-			ordered[((prevRoom[0] + 1) % 3)] = (int) arr[previousroom + 2 % 3];
+			ordered[(prevRoom[0] % 3)] = (int) arr[(previousroom + 1) % 3];
+			ordered[((prevRoom[0] + 1) % 3)] = (int) arr[(previousroom + 2) % 3];
 
 			GD.Print(ordered);
 
@@ -72,10 +82,6 @@ public class worldgeom : Node
 
 		// flip next room
 		_isflipped = !_isflipped;
-	}
-
-	private void CreateAdjacencyGraph() {
-		IcoSphereGeom _geometry = new IcoSphereGeom();
 	}
 
 

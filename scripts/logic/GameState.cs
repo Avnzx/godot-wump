@@ -8,7 +8,7 @@ public class GameState : Node {
     public int CurrentMonsterRoom { get; set; }
 
 
-    public Godot.Collections.Array? adjacency { get; set; }
+    public Godot.Collections.Array? adjacency { get; private set; }
 
     public GameState(){
         // TODO: change
@@ -18,9 +18,9 @@ public class GameState : Node {
 
     }
 
-    public override void _Ready()
-    {
-        base._Ready();
+    public override void _Ready() {
+        IcoSphereGeom adj = new IcoSphereGeom();
+        adjacency = adj.CreateAdjacencyGraph();
     }
 
 

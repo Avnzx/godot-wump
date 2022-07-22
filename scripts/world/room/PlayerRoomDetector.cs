@@ -18,10 +18,11 @@ class PlayerRoomDetector : Area {
             int currentroom = GetParent<CustRoom>().roomindex;
             Vector3 translation = GetParent<CustRoom>().Translation;
 
+            _gamestate.CurrentPlayerRoom = GetParent<CustRoom>().roomindex;
+
             EmitSignal("RoomChanged", new Godot.Collections.Array{olddirection,oldroom,currentroom,translation});
 
             
-            _gamestate.CurrentPlayerRoom = GetParent<CustRoom>().roomindex;
         }
     }
 

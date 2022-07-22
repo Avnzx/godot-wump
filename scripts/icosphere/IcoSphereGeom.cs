@@ -4,9 +4,8 @@ using System;
 
 public class IcoSphereGeom : Node {
 
-    private IcoSphereGeom() {
+    public IcoSphereGeom() {
         GenerateGeometry();
-        CreateAdjacencyGraph();
         GD.Print("IcoSphereGeom constructor called");
     }
 
@@ -112,42 +111,29 @@ public class IcoSphereGeom : Node {
     }
 
 
-    public void CreateAdjacencyGraph() {
-        // GameState _gamestate = GetNode<GameState>("/root/GameState");
+    public Godot.Collections.Array CreateAdjacencyGraph() {
 
-        // if (_gamestate.adjacency != null) {
-        //         GD.Print("adjacency graph already created");
-        //         return;
-        // } else {
-        //     GD.Print("was not created");
+        GD.Print("adjacency created");
 
-        //     _gamestate.adjacency = new Godot.Collections.Array();
-        //     _gamestate.adjacency.Resize(20);
+        Godot.Collections.Array adjacency = new Godot.Collections.Array();
+        adjacency.Resize(20);
 
-        //     for (int i = 0; i < faces.Count; i++) {
-        //         Godot.Collections.Array<int> _adj = new Godot.Collections.Array<int>();
+        for (int i = 0; i < faces.Count; i++) {
+            Godot.Collections.Array<int> _adj = new Godot.Collections.Array<int>();
 
-        //         for (int j = 0; j < faces.Count; j++) {
-        //             if(this.is_adjacent( (Vector3[]) faces[i], (Vector3[]) faces[j])){
-        //                 _adj.Add(j);
-        //             }
-        //         }
-                
-                
+            for (int j = 0; j < faces.Count; j++) {
+                if(this.is_adjacent( (Vector3[]) faces[i], (Vector3[]) faces[j])){
+                    _adj.Add(j);
+                }
+            } 
 
-        //         _gamestate.adjacency![i] = _adj;
-        //     }
+            adjacency![i] = _adj;
+        }
 
-        //     if (_gamestate.debugMode) {
-        //         // TODO: check for existence of adjacency and save compute
-        //         // by only calculating ONCE
-        //         GD.Print(_gamestate.adjacency);
-        //         GD.Print("adjacency graph created");
-        //     }
-        // }
+        return adjacency;
+
     }
-
-
 }
+
 
 
