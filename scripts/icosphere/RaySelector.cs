@@ -32,10 +32,10 @@ class RaySelector : Label {
 		
 		var fromPos = camera!.ProjectRayOrigin(GetViewport().GetMousePosition());
 		var toPos = camera.ProjectRayNormal(GetViewport().GetMousePosition()) * ray_length;
-		GD.Print(GetViewport().GetMousePosition());
+		// GD.Print(GetViewport().GetMousePosition());
 		
 		raycast.Translation = fromPos;
-		GD.Print(fromPos);
+		// GD.Print(fromPos);
 		raycast.CastTo = toPos;
 		raycast.Enabled = true;
 		raycast.DebugShapeThickness = 20;

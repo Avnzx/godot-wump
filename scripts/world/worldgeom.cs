@@ -41,12 +41,14 @@ public class worldgeom : Node
 		// create roomgroup
 		_roomList = _factory.CreateRoomGroup(_isflipped);
 
-		if (prevRoom == null && _gamestate.adjacency != null) {
+
+		if (prevRoom == null && _gamestate.adjacency[0] != null) {
+			GD.Print(_gamestate.adjacency);
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 			for (int i = 1; i < (_roomList.Length); i++) {
 				_roomList[i].roomindex = (int) arr[i-1];
 			}
-		} else if (_gamestate.adjacency != null) {
+		} else if (_gamestate.adjacency[0] != null) {
 			GD.Print(prevRoom);
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 
@@ -71,6 +73,11 @@ public class worldgeom : Node
 		// flip next room
 		_isflipped = !_isflipped;
 	}
+
+	private void CreateAdjacencyGraph() {
+		IcoSphereGeom _geometry = IcoSphereGeom.Instance;
+	}
+
 
     public override void _Input(InputEvent @event) {
 
