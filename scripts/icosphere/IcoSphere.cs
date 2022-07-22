@@ -6,7 +6,7 @@ public sealed class IcoSphere : Node {
     private SurfaceTool _surfacetool = new SurfaceTool();
     Godot.Collections.Array faces = new Godot.Collections.Array();
     private Godot.Collections.Array facecolliders = new Godot.Collections.Array();
-    IcoSphereGeom _geometry = IcoSphereGeom.Instance;
+    IcoSphereGeom _geometry = new IcoSphereGeom();
 
     public IcoSphere(){
         GD.Print(_geometry.faces);

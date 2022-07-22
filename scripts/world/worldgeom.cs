@@ -75,7 +75,7 @@ public class worldgeom : Node
 	}
 
 	private void CreateAdjacencyGraph() {
-		IcoSphereGeom _geometry = IcoSphereGeom.Instance;
+		IcoSphereGeom _geometry = new IcoSphereGeom();
 	}
 
 

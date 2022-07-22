@@ -2,18 +2,13 @@ using Godot;
 using System;
 
 
-public sealed class IcoSphereGeom : Node {
+public class IcoSphereGeom : Node {
 
     private IcoSphereGeom() {
         GenerateGeometry();
         CreateAdjacencyGraph();
         GD.Print("IcoSphereGeom constructor called");
     }
-
-    public static IcoSphereGeom Instance { get { 
-       if (instance == null)
-            instance = new IcoSphereGeom();
-            return instance; } }
 
     public Godot.Collections.Array faces = new Godot.Collections.Array();
 
