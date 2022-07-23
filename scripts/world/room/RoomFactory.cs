@@ -23,32 +23,30 @@ public class RoomFactory : Spatial {
 
 		float _halfpolygon = CoordHelper.PolygonFlatToFlatDistance(6,15f); 
 
-		var color = new Color(
-				(float) GD.RandRange(0.1, 1.0), 
-				(float) GD.RandRange(0.1, 1.0), 
-				(float) GD.RandRange(0.1, 1.0),1);
-
 		var color2 = new Color(
 				(float) GD.RandRange(0.3, 1.0), 
 				(float) GD.RandRange(0.4, 1.0), 
 				(float) GD.RandRange(0.5, 1.0),1);
 
-		SpatialMaterial mat = new SpatialMaterial();
+		//SpatialMaterial mat = new SpatialMaterial();
+		// mat.AlbedoColor = color;
+		SpatialMaterial mat = ResourceLoader.Load<SpatialMaterial>("res://assets/tile.tres");
 		SpatialMaterial mat2 = new SpatialMaterial();
-
+		
 
 		MeshInstance mi = new MeshInstance();
 		ArrayMesh arrmesh1 =  CoordHelper.CreatePolygonMesh(vertices: 6, radius: 15f );
 		mi.Mesh = arrmesh1;
 
-		mat.AlbedoColor = color;
+		
 		mat2.AlbedoColor = color2;
 
-		for (int i = 2; i < arrmesh1.GetSurfaceCount(); i++)
-		{
-			arrmesh1.SurfaceSetMaterial(i,mat);
+		// set side face materials
+		for (int i = 2; i < arrmesh1.GetSurfaceCount(); i++) {
+			arrmesh1.SurfaceSetMaterial(i,mat2);
 		}
-		arrmesh1.SurfaceSetMaterial(1,mat2);
+		arrmesh1.SurfaceSetMaterial(1,mat);
+
 		_room.AddChild(mi,true);
         mi.CreateConvexCollision();
 
@@ -79,13 +77,9 @@ public class RoomFactory : Spatial {
 				(float) GD.RandRange(0.1, 1.0), 
 				(float) GD.RandRange(0.1, 1.0),1);
 
-		var color2 = new Color(
-				(float) GD.RandRange(0.3, 1.0), 
-				(float) GD.RandRange(0.4, 1.0), 
-				(float) GD.RandRange(0.5, 1.0),1);
 
 		SpatialMaterial mat = new SpatialMaterial();
-		SpatialMaterial mat2 = new SpatialMaterial();
+		SpatialMaterial mat2 = ResourceLoader.Load<SpatialMaterial>("res://assets/tile.tres");
 
 
 		MeshInstance mi = new MeshInstance();
@@ -93,7 +87,6 @@ public class RoomFactory : Spatial {
 		mi.Mesh = arrmesh1;
 
 		mat.AlbedoColor = color;
-		mat2.AlbedoColor = color2;
 
 		for (int i = 2; i < arrmesh1.GetSurfaceCount(); i++)
 		{

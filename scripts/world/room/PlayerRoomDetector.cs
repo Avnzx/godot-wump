@@ -5,6 +5,9 @@ class PlayerRoomDetector : Area {
         this.Connect("body_entered", this, "Body_entered");
         this.AddUserSignal("RoomChanged");
         this.Connect("RoomChanged", GetNode<worldgeom>("/root/worldgeom"), "HandleRoomDetector");
+
+        this.AddUserSignal("StateChanged");
+        this.Connect("StateChanged", GetNode("/root/GameState"), "HandleStateChanged");
     }
 
     public void Body_entered(Node node) {
@@ -21,10 +24,14 @@ class PlayerRoomDetector : Area {
             _gamestate.CurrentPlayerRoom = GetParent<CustRoom>().roomindex;
 
             EmitSignal("RoomChanged", new Godot.Collections.Array{olddirection,oldroom,currentroom,translation});
+            EmitSignal("StateChanged");
 
             
         }
     }
+
+    [Signal]
+    public delegate void StateChanged();
 
     [Signal]
     public delegate void RoomChanged(int olddirection, int oldroom, int currentroom, Vector3 translation);

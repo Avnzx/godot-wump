@@ -22,11 +22,13 @@ class FaceSelect : Node {
         specialfaces[(int) specialfacetype.Player] = new Godot.Collections.Array{selectedface};
         ChangeTextures();
     }
+
+    public void SelectionHighlight(Godot.Collections.Array arr) {
+        specialfaces[(int) specialfacetype.Selected] = arr;
+        ChangeTextures();
+    }
     
     private void ChangeTextures() {
-        specialfaces[(int) specialfacetype.Selected] = new Godot.Collections.Array{11,12,13};
-
-
 
         for (int i = 0; i < sphere!._array_mesh.GetSurfaceCount(); i++)
             sphere._array_mesh.SurfaceSetMaterial(i, mats[sizeof(specialfacetype)]);
