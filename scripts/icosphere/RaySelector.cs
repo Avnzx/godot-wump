@@ -25,12 +25,12 @@ class RaySelector : Label {
 	StaticBody? collider;
 	StaticBody? previouscollider;
 
-
+	// otherwise Godot will crash if we don't ratelimit the method
 	public void SendData() {
-		// otherwise Godot will crash if we don't ratelimit the method
-		if (raycast.IsColliding()) {
-			collider = (StaticBody) raycast.GetCollider();
-		}
+		
+		// we still want to send even if the room is null
+		collider = (StaticBody) raycast.GetCollider();
+		
 
 		if (collider != previouscollider) {
 			EmitSignal("RoomHovered", new Godot.Collections.Array{collider});
@@ -63,7 +63,7 @@ class RaySelector : Label {
 	}
 
 	[Signal]
-    public delegate void RoomHovered(StaticBody room);
+    public delegate void RoomHovered(StaticBody? room);
 
 		
 }
