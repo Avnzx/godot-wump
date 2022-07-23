@@ -17,6 +17,7 @@ class TrapTeleporter : Spatial {
             (( _gamestate.batRooms?.Contains(rand) ?? false)) || 
             ((_gamestate.pitRooms?.Contains(rand)) ?? false)) 
         {
+            // FIXME: no
             goto Incorrect;
         } else {
             goto Correct;

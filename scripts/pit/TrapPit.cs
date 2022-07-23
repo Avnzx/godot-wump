@@ -9,8 +9,7 @@ public class TrapPit : Area {
     }
 
     public void Fallen(Node node) {
-        // die
-        // TODO: die
+        GetNode<SceneManager>("/root/SceneManager").GotoEndScene(SceneManager.EndReason.Pit);
         GD.Print("died to fall");
     }
 

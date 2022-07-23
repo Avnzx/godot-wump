@@ -19,7 +19,7 @@ public class GameState : Node {
 
         CurrentPlayerRoom = 0;
         // FIXME: debugging, remove
-        CurrentMonsterRoom = 1;
+        CurrentMonsterRoom = 7;
         batRooms.Add(1);
         pitRooms.Add(4);
     }
@@ -29,7 +29,7 @@ public class GameState : Node {
         adjacency = adj.CreateAdjacencyGraph();
 
         AddChild(new audiomanager());
-        AddChild(new NewState());
+        // AddChild(new NewState());
         AddChild(new Death());
         
 
