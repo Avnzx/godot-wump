@@ -16,11 +16,13 @@ public class playercontroller : KinematicBody {
     // };
 
     public override void _PhysicsProcess(float delta) {
-        Vector2 m_input = Input.GetVector(
+        Vector2 m_input = inputenabled ? Input.GetVector(
             "key_left",
             "key_right", 
             "key_backward", 
-            "key_forward");
+            "key_forward")
+            // zero if input disabled
+            : Vector2.Zero;
 
 
         
@@ -90,6 +92,8 @@ public class playercontroller : KinematicBody {
     private float m_deaccel = 0.2f;
     [Export]
     private float m_accel = 0.1f;
+    [Export]
+    private bool inputenabled = true;
 
     
 

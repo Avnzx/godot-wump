@@ -7,8 +7,8 @@ public class GameState : Node {
     public int CurrentPlayerRoom { get; set; }
     public int CurrentMonsterRoom { get; set; }
 
-    public Godot.Collections.Array? pitRooms;
-    public Godot.Collections.Array? batRooms;
+    public Godot.Collections.Array<int>? pitRooms = new Godot.Collections.Array<int>();
+    public Godot.Collections.Array<int>? batRooms = new Godot.Collections.Array<int>();
 
 
     public Godot.Collections.Array? adjacency { get; private set; }
@@ -18,8 +18,9 @@ public class GameState : Node {
         debugMode = true;
 
         CurrentPlayerRoom = 0;
+        // FIXME: debugging, remove
         CurrentMonsterRoom = 1;
-
+        batRooms.Add(1);
     }
 
     public override void _Ready() {

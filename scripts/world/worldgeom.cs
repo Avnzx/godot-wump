@@ -27,9 +27,16 @@ public class worldgeom : Node
 
 		GD.Print(arr);
 
-		prevRoom = new int[2];
-		prevRoom[0] = (int) arr[0];
-		prevRoom[1] = (int) arr[1];
+
+		if (arr[0] == null) {
+			prevRoom = null;
+		} else {
+			prevRoom = new int[2];
+			prevRoom[0] = (int) arr[0];
+			prevRoom[1] = (int) arr[1];
+		}
+
+		_gamestate.CurrentPlayerRoom = (int) arr[2];
 		
 		// _factory.RemoveRoom(_roomList[2]);
 		_oldRooms = _roomList;
@@ -53,12 +60,16 @@ public class worldgeom : Node
 			CreateRoomGroup();
 
 
+
 		if (prevRoom == null) {
+			GD.Print("previous is null");
+
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 			for (int i = 1; i < (_roomList.Length); i++) {
 				_roomList[i].roomindex = (int) arr[i-1];
 			}
 		} else {
+			GD.Print("previous is NOT null");
 			GD.Print(prevRoom);
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 
