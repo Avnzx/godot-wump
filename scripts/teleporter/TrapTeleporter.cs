@@ -7,6 +7,9 @@ class TrapTeleporter : Spatial {
         GameState _gamestate = GetNode<GameState>("/root/GameState");
 
         RandomNumberGenerator rng = new RandomNumberGenerator();
+
+        Incorrect:
+
         rng.Randomize();
         int rand = rng.RandiRange(0,19);
 
@@ -14,10 +17,13 @@ class TrapTeleporter : Spatial {
             (( _gamestate.batRooms?.Contains(rand) ?? false)) || 
             ((_gamestate.pitRooms?.Contains(rand)) ?? false)) 
         {
-            SelectRoom();
-        } 
+            goto Incorrect;
+        } else {
+            goto Correct;
+        }
 
-        return rand;
+        Correct:
+            return rand;
     }
 
 

@@ -35,6 +35,8 @@ public class GameState : Node {
 
         this.AddUserSignal("GameStateChanged");
         this.AddUserSignal("CheckGameState");
+
+        this.EmitSignal("CheckGameState");
     }
 
 
