@@ -8,7 +8,7 @@ class RaySelector : Label {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		this.Text = "Placeholder";
+		// this.Text = "Placeholder";
 		AddChild(raycast);
 		
 		camera = GetCamera();
@@ -19,6 +19,10 @@ class RaySelector : Label {
 
 		AddUserSignal("RoomHovered");
 		this.Connect("RoomHovered", GetNode<FaceSelect>("/root/Icosphere/faceselector"), "OnRoomHover");
+
+		AddUserSignal("RoomSelected");
+		this.Connect("RoomSelected", GetNode<PathSelector>("/root/Icosphere/faceselector/pathselector"), "HandleNewSelectionAttempt");
+
 	}
 
 
@@ -43,6 +47,11 @@ class RaySelector : Label {
 	private Camera GetCamera() =>  GetNode<Camera>("../../Gimbal/Camera");
 
 	public override void _Input(InputEvent @event) {
+		if (@event is InputEventMouseButton && Input.IsMouseButtonPressed((int) Godot.ButtonList.Left)) {
+			if (collider != null)
+				EmitSignal("RoomSelected", new Godot.Collections.Array{collider});
+
+		}
 	}
 
 	public override void _PhysicsProcess(float delta) {
@@ -64,6 +73,9 @@ class RaySelector : Label {
 
 	[Signal]
     public delegate void RoomHovered(StaticBody? room);
+	[Signal]
+    public delegate void RoomSelected(StaticBody? room);
+
 
 		
 }

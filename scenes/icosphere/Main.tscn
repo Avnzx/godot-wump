@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/icosphere/Camera.gd" type="Script" id=1]
 [ext_resource path="res://scripts/icosphere/IcoSphere.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/util/mouse_speed.gd" type="Script" id=4]
 [ext_resource path="res://scripts/icosphere/selector/FaceSelect.cs" type="Script" id=5]
 [ext_resource path="res://assets/stars_environment.tres" type="Environment" id=6]
+[ext_resource path="res://scripts/icosphere/selector/PathSelector.cs" type="Script" id=7]
 
 [node name="Icosphere" type="Spatial"]
 script = ExtResource( 1 )
@@ -43,3 +44,6 @@ environment = ExtResource( 6 )
 
 [node name="faceselector" type="Spatial" parent="."]
 script = ExtResource( 5 )
+
+[node name="pathselector" type="Spatial" parent="faceselector"]
+script = ExtResource( 7 )

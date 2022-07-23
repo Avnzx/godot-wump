@@ -1,6 +1,6 @@
 using Godot; 
 
-class FaceSelect : Node {
+public class FaceSelect : Node {
 
     // array containing integer arrats of special faces
     Godot.Collections.Array specialfaces = new Godot.Collections.Array();
@@ -46,6 +46,7 @@ class FaceSelect : Node {
 
 
     public override void _Ready() {
+        this.AddChild(new PathSelector());
         sphere = GetNode<IcoSphere>("/root/Icosphere/Sphere");
 
         specialfaces.Resize(sizeof(specialfacetype));
