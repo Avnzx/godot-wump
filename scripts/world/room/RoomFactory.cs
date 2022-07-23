@@ -15,7 +15,25 @@ public class RoomFactory : Spatial {
         _manager.Roomlist = this.GetPath();
     }
 
-    public CustRoom NewRoom() {
+	public CustRoom NewRoom() {
+		GameState _state = GetNode<GameState>("/root/GameState");
+
+	if (_state.pitRooms?.Contains(_state.CurrentPlayerRoom) ?? false) {
+		return NewPitRoom();	
+	} else {
+		return NewFilledRoom();
+	}
+	}
+
+
+	public CustRoom NewPitRoom() { 
+		CustRoom _room = NewFilledRoom();
+		_room.AddChild(new MoveTile(_room));
+		return _room;
+
+	}
+
+    public CustRoom NewFilledRoom() {
 
 		CustRoom _room = new CustRoom();
 		_room.Name = "hexroom";

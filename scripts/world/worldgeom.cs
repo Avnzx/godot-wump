@@ -8,6 +8,7 @@ public class worldgeom : Node
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {	
+		GetTree().DebugCollisionsHint = false;
 		m_sceneManager = GetNode<SceneManager>("/root/SceneManager");
 		_gamestate = GetNode<GameState>("/root/GameState");
 		_factory = new RoomFactory();

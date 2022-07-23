@@ -21,6 +21,7 @@ public class GameState : Node {
         // FIXME: debugging, remove
         CurrentMonsterRoom = 1;
         batRooms.Add(1);
+        pitRooms.Add(4);
     }
 
     public override void _Ready() {

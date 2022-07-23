@@ -97,6 +97,8 @@ public class IcoSphere : Node {
         GD.Print(_array_mesh);
         mi.Mesh = _array_mesh;
         AddChild(mi);
+        // draw some nice blue lines on the edges of the colliders
+        GetTree().DebugCollisionsHint = true;
         
 
         // go through each face and create a new ConcaveCollision
