@@ -93,7 +93,7 @@ public class playercontroller : KinematicBody {
     [Export]
     private float m_accel = 0.1f;
     [Export]
-    private bool inputenabled = true;
+    public bool inputenabled = true;
 
     
 

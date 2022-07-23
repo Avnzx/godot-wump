@@ -130,5 +130,5 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
-transform = Transform( 5.17933, 0, 0, 0, 6.43073, 0, 0, 0, 4.47646, 0, 10.3629, 0 )
+transform = Transform( 4.72891, 0, 0, 0, 6.43072, 0, 0, 0, 2.90128, 0, 10.363, 0 )
 shape = SubResource( 12 )

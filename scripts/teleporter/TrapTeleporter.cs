@@ -32,11 +32,31 @@ class TrapTeleporter : Spatial {
         Area area = GetNode<Area>("Area");
 
         GetNode<Area>("Area").Connect("body_entered",this,nameof(SignalRoomChange));
+
+        player = GetNode<playercontroller>("../../../Player");
+        player.inputenabled = false;
+        _translation = ((Spatial) GetParent().GetParent()).Translation;
     }
 
+    private playercontroller? player;
+    private Vector3 _translation; 
+
     public void SignalRoomChange(Node node) {
+        player!.inputenabled = true;
         Vector3 translation = GetParent<CustRoom>().Translation;
+
         EmitSignal("RoomChanged", new Godot.Collections.Array{null,null,SelectRoom(),translation});
+    }
+
+    public override void _PhysicsProcess(float delta) {
+        GD.Print(_translation);
+        Vector3 playertransform = new Vector3();
+
+        playertransform.x = Mathf.Lerp(player!.Translation.x, _translation.x, 0.005f);
+        playertransform.z = Mathf.Lerp(player!.Translation.z, _translation.z, 0.005f);
+        playertransform.y = player.Translation.y;
+
+        player.Translation = playertransform;
     }
 
     [Signal]

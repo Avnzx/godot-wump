@@ -10,7 +10,6 @@
 extents = Vector3( 100, 5, 100 )
 
 [node name="Spatial" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194977, 0.348373, -0.363815 )
 script = ExtResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
