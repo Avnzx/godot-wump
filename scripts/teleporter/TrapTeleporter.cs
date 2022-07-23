@@ -7,6 +7,7 @@ class TrapTeleporter : Spatial {
         GameState _gamestate = GetNode<GameState>("/root/GameState");
 
         RandomNumberGenerator rng = new RandomNumberGenerator();
+        rng.Randomize();
         int rand = rng.RandiRange(0,19);
 
         if (_gamestate.CurrentPlayerRoom == rand || 
