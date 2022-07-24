@@ -8,7 +8,7 @@ public class deathdetect : Area {
     }
 
     public void ActuallyDies(Node node) {
-        GD.Print("died to wumpus");
+        // GD.Print("died to wumpus");
         GetNode<SceneManager>("/root/SceneManager").GotoEndScene(SceneManager.EndReason.Wumpus);
         
     }

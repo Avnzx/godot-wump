@@ -28,9 +28,7 @@ class ReasonForEnd : TextureRect {
                 throw new System.ArgumentOutOfRangeException("no end reason specified");
         }
         
-        // StreamTexture stex = (StreamTexture) ResourceLoader.Load("res://assets/fonts/arrow_win.png");
-        
-        GD.Print(stex.GetType());
+
         this.Texture = stex;
     }
 

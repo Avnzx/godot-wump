@@ -18,13 +18,13 @@ public class GameState : Node {
 
     public GameState(){
         // TODO: change
-        debugMode = true;
+        debugMode = false;
 
         CurrentPlayerRoom = 0;
         // FIXME: debugging, remove
-        CurrentMonsterRoom = 7;
-        batRooms.Add(1);
-        pitRooms.Add(4);
+        // CurrentMonsterRoom = 7;
+        // batRooms.Add(1);
+        // pitRooms.Add(4);
     }
 
     public override void _Ready() {
@@ -32,7 +32,6 @@ public class GameState : Node {
         adjacency = adj.CreateAdjacencyGraph();
 
         AddChild(new audiomanager());
-        // AddChild(new NewState());
         AddChild(new Death());
         
 

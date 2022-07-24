@@ -26,7 +26,7 @@ class audiomanager : AudioStreamPlayer {
 
         if (_gamestate.pitRooms != null) {
             for (int i = 0; i < _gamestate.pitRooms.Count; i++){
-                if (((Godot.Collections.Array) _gamestate.adjacency[_gamestate.CurrentPlayerRoom]).Contains(_gamestate.batRooms[i])) {
+                if (((Godot.Collections.Array) _gamestate.adjacency[_gamestate.CurrentPlayerRoom]).Contains(_gamestate.pitRooms[i])) {
                     GD.Print("playing pit audio");
                 }
             }

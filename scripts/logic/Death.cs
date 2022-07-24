@@ -9,13 +9,16 @@ class Death : Node {
     public void CheckGameState() {
         GameState _gamestate = GetNode<GameState>("/root/GameState");
 
+        if (GetNodeOrNull<Spatial>("/root/worldgeom/RoomList") == null)
+            return;
+
         if (_gamestate.CurrentPlayerRoom == _gamestate.CurrentMonsterRoom) {
             DeathToWumpus();
         }
     }
 
     public void DeathToWumpus() {
-        GD.Print("dying to wumpus");
+        // GD.Print("dying to wumpus");
         spawnintl = GetNode<Spatial>("/root/worldgeom/RoomList");
         Vector3 spawn = Vector3.Zero;
         spawn.y = 60;

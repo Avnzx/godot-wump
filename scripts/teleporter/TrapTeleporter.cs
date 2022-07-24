@@ -35,7 +35,7 @@ class TrapTeleporter : Spatial {
         this.AddUserSignal("StateChanged");
         this.Connect("StateChanged", GetNode("/root/GameState"), "HandleStateChanged");
 
-        GD.Print(GetNode<Area>("Area"));
+        // GD.Print(GetNode<Area>("Area"));
         Area area = GetNode<Area>("Area");
 
         GetNode<Area>("Area").Connect("body_entered",this,nameof(SignalRoomChange));
@@ -56,7 +56,7 @@ class TrapTeleporter : Spatial {
     }
 
     public override void _PhysicsProcess(float delta) {
-        GD.Print(_translation);
+        // GD.Print(_translation);
         Vector3 playertransform = new Vector3();
 
         playertransform.x = Mathf.Lerp(player!.Translation.x, _translation.x, 0.005f);

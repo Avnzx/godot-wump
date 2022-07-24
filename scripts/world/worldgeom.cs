@@ -26,7 +26,6 @@ public class worldgeom : Node
 	public void HandleRoomDetector(Godot.Collections.Array arr) {
 		Vector3 localtranslation = (Vector3) arr[3];
 
-		GD.Print(arr);
 
 
 		if (arr[0] == null) {
@@ -63,15 +62,15 @@ public class worldgeom : Node
 
 
 		if (prevRoom == null) {
-			GD.Print("previous is null");
+			// GD.Print("previous is null");
 
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 			for (int i = 1; i < (_roomList.Length); i++) {
 				_roomList[i].roomindex = (int) arr[i-1];
 			}
 		} else {
-			GD.Print("previous is NOT null");
-			GD.Print(prevRoom);
+			// GD.Print("previous is NOT null");
+			// GD.Print(prevRoom);
 			Godot.Collections.Array arr = (Godot.Collections.Array) _gamestate.adjacency![_gamestate.CurrentPlayerRoom];
 
 			int previousroom = arr.IndexOf(prevRoom![1]);
@@ -81,7 +80,7 @@ public class worldgeom : Node
 			ordered[(prevRoom[0] % 3)] = (int) arr[(previousroom + 1) % 3];
 			ordered[((prevRoom[0] + 1) % 3)] = (int) arr[(previousroom + 2) % 3];
 
-			GD.Print(ordered);
+			// GD.Print(ordered);
 
 			for (int i = 0; i < ordered.Length; i++) {
 				_roomList[i+1].roomindex = ordered[i];
@@ -90,7 +89,7 @@ public class worldgeom : Node
 		}
 
 		if(_gamestate.debugMode)
-			GD.Print(_gamestate.CurrentPlayerRoom);
+			// GD.Print(_gamestate.CurrentPlayerRoom);
 
 		// flip next room
 		_isflipped = !_isflipped;
@@ -100,7 +99,7 @@ public class worldgeom : Node
     public override void _Input(InputEvent @event) {
 
 		if (Input.IsActionPressed("toggle_map")) {
-			GD.Print(m_sceneManager);
+			// GD.Print(m_sceneManager);
 			m_sceneManager!.DeferredGotoScene("res://scenes/icosphere/Main.tscn");
 		}
 

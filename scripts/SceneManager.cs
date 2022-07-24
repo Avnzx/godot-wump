@@ -19,7 +19,6 @@ public class SceneManager : Node {
 
 
         GD.Print("Game loaded");
-        GD.Print(CurrentScene);
         
         var testEnv = TestEnvironment.From(OS.GetCmdlineArgs());
         if (testEnv.ShouldRunTests) {
@@ -27,7 +26,8 @@ public class SceneManager : Node {
         } else {
             // go to our default scene if there is an exception
             // allow for going to other scenes in editor
-            DeferredGotoScene("res://scenes/world/world.tscn");
+            // DeferredGotoScene("res://scenes/world/world.tscn");
+            DeferredGotoScene("res://scenes/menus/MainMenu.tscn");
             try{
                 foreach (var item in OS.GetCmdlineArgs()) {
                     DeferredGotoScene(item);
@@ -81,9 +81,14 @@ public class SceneManager : Node {
 
     }
 
-    public void Quit() {
-        System.Environment.Exit(0);
+    public void NewGame() {
+        NewState state = new NewState();
+        this.AddChild(state,true);
+        DeferredGotoScene("res://scenes/world/world.tscn");
+        state.QueueFree();
     }
+
+    public void Quit() => System.Environment.Exit(0);
 
     public enum EndReason {Wumpus, Pit, Win, Arrows}
 

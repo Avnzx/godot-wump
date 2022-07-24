@@ -18,7 +18,7 @@ class PathSelector : Node {
 
     public void HandleNewSelectionAttempt(Godot.Collections.Array properties) {
         int selectedface = ((Godot.Collections.Array) sphere!.facecolliders).IndexOf(properties[0]);
-        GD.Print(ValidateSelection(selectedface));
+
 
         if (ValidateSelection(selectedface)) {
             selectedfaces.Add(selectedface);

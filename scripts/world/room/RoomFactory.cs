@@ -84,11 +84,11 @@ public class RoomFactory : Spatial {
 	
 	private void AddRoomDecorations(CustRoom room) {
 		GameState _state = GetNode<GameState>("/root/GameState");
-		GD.Print("try add decor   ", _state.batRooms?.Contains(_state.CurrentPlayerRoom));
+		// GD.Print("try add decor   ", _state.batRooms?.Contains(_state.CurrentPlayerRoom));
 
 
 		if (_state.batRooms?.Contains(_state.CurrentPlayerRoom) ?? false) {
-			GD.Print("tried adding teleroom");
+			// GD.Print("tried adding teleroom");
 			Node _tele = ResourceLoader.Load<PackedScene>("res://assets/traps/kenney/gate_complex.tscn").Instance();
 			room.CallDeferred("add_child", _tele);
 		}

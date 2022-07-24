@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/sky_seamless_texture_5904.jpg" type="Texture" id=1]
 [ext_resource path="res://scripts/UI/Quit.cs" type="Script" id=2]
+[ext_resource path="res://scripts/UI/NewGame.cs" type="Script" id=3]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -31,6 +32,7 @@ margin_right = 82.0
 margin_bottom = 72.0
 size_flags_vertical = 3
 text = "New Game"
+script = ExtResource( 3 )
 
 [node name="Button2" type="Button" parent="VBoxContainer"]
 margin_top = 76.0
