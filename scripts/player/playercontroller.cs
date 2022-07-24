@@ -4,8 +4,6 @@ using System;
 public class playercontroller : KinematicBody {
     public override void _Ready() {
         m_camera = GetNode<Camera>("../Camera");
-        // FIXME: REMOVE after debugging
-        // m_camera = GetNode<Camera>("../Camera2");
 
         m_body = this;
         this.Name = "Player";
@@ -16,6 +14,9 @@ public class playercontroller : KinematicBody {
     // };
 
     public override void _PhysicsProcess(float delta) {
+
+        // Turn the input into a vector 
+        // If input is disabled input is a zero vector
         Vector2 m_input = inputenabled ? Input.GetVector(
             "key_left",
             "key_right", 
@@ -29,12 +30,17 @@ public class playercontroller : KinematicBody {
 
         // vector * scalar, move based on camera view
         // guaranteed to be normalized prev to * m_speed
+        // Do this so that the player always moves relative to the 
+        // CAMERA and nothing else (key up = up on the camera)
         if (m_camera != null){
             m_horizontalVelocity = m_camera.Transform.basis.y * m_input.y;
             m_horizontalVelocity += m_camera.Transform.basis.x * m_input.x;
             m_horizontalVelocity = m_horizontalVelocity * m_speed;
         }
         
+
+        // Slowly change the applied velocity instead of changing
+        // it instantaneously, to give the illusion of animation
         if (m_input != Vector2.Zero) {
             m_velocity.x = 
                 Mathf.Lerp(m_velocity.x, m_horizontalVelocity.x, m_accel);
@@ -54,7 +60,7 @@ public class playercontroller : KinematicBody {
             float lookdir = Mathf.Atan2( -m_looktarget.x, -m_looktarget.z );
             this.Rotation = new Vector3(0,lookdir,0); 
 
-            // Apply a rotation based on speed
+            // Apply a rotation based on speed for a nice effect
             this.Rotation -= new Vector3( 
                 (((Mathf.Abs(m_velocity.x) + Mathf.Abs(m_velocity.z)) / m_speed) * m_maxVelAngle),0,0);
         } else {

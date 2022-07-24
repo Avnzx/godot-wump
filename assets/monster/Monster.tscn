@@ -586,7 +586,6 @@ transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0 )
 transform = Transform( 0.0254, 0, 0, 0, 0.0254, 0, 0, 0, 0.0254, 0, 0, 11.7322 )
 
 [node name="Skeleton" type="Skeleton" parent="Node2/Node32"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 bones/0/name = "bone"
 bones/0/parent = -1
 bones/0/rest = Transform( -2.5034e-05, -1.97291e-05, 1, 0.86794, -0.496669, 1.19209e-05, 0.496669, 0.86794, 2.95639e-05, -1.16286, 99.4341, -44.1331 )

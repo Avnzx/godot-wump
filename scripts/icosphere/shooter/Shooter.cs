@@ -25,7 +25,7 @@ class Shooter : CanvasLayer {
         }
     }
     public void ClearShoot() {
-        // clear the shooter array and free itself
+        // clear the shooter array and free itself to remove the overlay
         GD.Print("tried freeing");
         GetParent<PathSelector>().selectedfaces = new Godot.Collections.Array();
         GetParent<PathSelector>().shooter = null;
@@ -33,13 +33,6 @@ class Shooter : CanvasLayer {
 
         this.QueueFree();
     }
-
-    // public override void _Input(InputEvent @event) {
-    //     if (Input.IsMouseButtonPressed((int) Godot.ButtonList.Left)) {
-    //         // ClearShoot();
-    //         GD.Print("clear_selection");
-    //     }
-    // }
     
 
     [Signal]

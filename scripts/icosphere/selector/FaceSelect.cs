@@ -6,6 +6,10 @@ public class FaceSelect : Node {
     Godot.Collections.Array specialfaces = new Godot.Collections.Array();
     Godot.Collections.Array<SpatialMaterial> mats = 
         new Godot.Collections.Array<SpatialMaterial>();
+
+    // The order of items in this array will determine priority
+    // e.g. Hover has priority over Player which has priority
+    // over selected
     enum specialfacetype {Selected,Player,Hover}
 
     public void OnRoomHover(Godot.Collections.Array properties){
@@ -23,11 +27,15 @@ public class FaceSelect : Node {
         ChangeTextures();
     }
 
+    // Highlight the specific selection on screen by setting the
+    // array and then telling the drawer to draw
     public void SelectionHighlight(Godot.Collections.Array arr) {
         specialfaces[(int) specialfacetype.Selected] = arr;
         ChangeTextures();
     }
     
+    // Read the arrays and change the textures to what they should be
+    // to represent the current state of the room
     private void ChangeTextures() {
 
         for (int i = 0; i < sphere!._array_mesh.GetSurfaceCount(); i++)
@@ -57,7 +65,7 @@ public class FaceSelect : Node {
 
     }
 
-
+    // Some materials to draw with
     private void InitMaterials () {
         SpatialMaterial hovermat = new SpatialMaterial();
         hovermat.AlbedoColor = new Color(1,1,1,1);

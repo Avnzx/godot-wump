@@ -11,11 +11,13 @@ class audiomanager : AudioStreamPlayer {
 
         GD.Print(_gamestate.CurrentPlayerRoom);
 
+        // Check if the wumpus is adjacent to us
         if (((Godot.Collections.Array) _gamestate.adjacency[_gamestate.CurrentPlayerRoom]).Contains(_gamestate.CurrentMonsterRoom)) {
             // play wumpus audio
             GD.Print("playing wumpus audio");
         }
 
+        //  Check if there are any bats next to us
         if (_gamestate.batRooms != null) {
             for (int i = 0; i < _gamestate.batRooms.Count; i++){
                if (((Godot.Collections.Array) _gamestate.adjacency[_gamestate.CurrentPlayerRoom]).Contains(_gamestate.batRooms[i])) {
@@ -24,6 +26,7 @@ class audiomanager : AudioStreamPlayer {
             }
         }
 
+        // Check if there are any bottomless pits next to us
         if (_gamestate.pitRooms != null) {
             for (int i = 0; i < _gamestate.pitRooms.Count; i++){
                 if (((Godot.Collections.Array) _gamestate.adjacency[_gamestate.CurrentPlayerRoom]).Contains(_gamestate.pitRooms[i])) {

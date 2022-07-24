@@ -92,14 +92,14 @@ public class worldgeom : Node
 			GD.Print(_gamestate.CurrentPlayerRoom);
 		}
 
-		// flip next room
-		GD.Print("flipping next room");
+		// set isflipped so the next room becomes flipped
 		_isflipped = !_isflipped;
 	}
 
 
     public override void _Input(InputEvent @event) {
-
+		
+		// if map toggled, go to the map
 		if (Input.IsActionPressed("toggle_map")) {
 			// GD.Print(m_sceneManager);
 			m_sceneManager!.DeferredGotoScene("res://scenes/icosphere/Main.tscn");
@@ -107,6 +107,7 @@ public class worldgeom : Node
 
     }
 
+	// set so I can use in the editor for debugging purposes
 	[Export]
 	public bool _isflipped = false;
 

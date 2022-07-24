@@ -35,6 +35,8 @@ class PathSelector : Node {
 
     public Shooter? shooter;
 
+
+    // Add a new shooter and check if there already is one
     private void AddShooter() {
         if (shooter == null) {
             GD.Print("shooter is null");
@@ -48,6 +50,8 @@ class PathSelector : Node {
         }    
     }
 
+    // Check if the face you are trying to select is valid
+    // based on the adjacency graph and already selected rooms
     public bool ValidateSelection(int selection) {
         GameState _state = GetNode<GameState>("/root/GameState");
         GD.Print("selected faces?  ", selectedfaces.Count);

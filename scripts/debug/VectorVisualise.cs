@@ -1,10 +1,15 @@
 using Godot;
 using System;
 
+
+// Handy for debugging, allows us to see a 3D vector visualised onto
+// Screen space, as Godot cannot do that
 class VectorVisualise : Control {
 
     private CanvasLayer DebugCanvasLayer;
 
+    // We are translating the 3D vector into 2D to be able
+    // To draw it
     public VectorVisualise(Node node) {
         DebugCanvasLayer = new CanvasLayer();
         DebugCanvasLayer.Name = "DebugCanvas";
@@ -23,7 +28,7 @@ class VectorVisualise : Control {
     public override void _Process(float delta) => Update();
 
 
-    // Helper function
+    // Helper function to draw a simple triangle
     public void DrawTriangle
     (Vector2 pos, Vector2 dir, float size, Color color) {
 
@@ -36,7 +41,7 @@ class VectorVisualise : Control {
     DrawPolygon(points, new Color[] {color});
     }
 
-    // Draw all vectors to screen
+    // Draw all vectors in the queue to screen
     public void DrawQueue() {
 
         Camera camera = this.GetViewport().GetCamera();
@@ -59,6 +64,9 @@ class VectorVisualise : Control {
 
     Godot.Collections.Array visualise_queue = new Godot.Collections.Array();
 
+    // Add some object to the visualise queue
+    // Where _obj will be the origin and _prop
+    // Is the visualised vector
     public void AddVisQueue(Godot.Spatial _obj, Vector3 _prop) {
         Godot.Collections.Array _newthing = new Godot.Collections.Array();
         _newthing.Add(_obj);
@@ -75,8 +83,11 @@ class VectorVisualise : Control {
         visualise_queue.Add(_newthing);
     }
 
+
+    // Remove the last element from the visualise queue
     public void PopLastVisual() => visualise_queue.RemoveAt(visualise_queue.Count - 1);
 
+    // Return the visualisation queue
     public Godot.Collections.Array GetVisQueue() => visualise_queue;
 
 }
