@@ -2,10 +2,13 @@ using Godot;
 using System;
 
 public class GameState : Node {
+    public SceneManager.EndReason? endReason;
     public Boolean debugMode { get; set; }
 
     public int CurrentPlayerRoom { get; set; }
     public int CurrentMonsterRoom { get; set; }
+
+    public int NumArrows = 5;
 
     public Godot.Collections.Array<int>? pitRooms = new Godot.Collections.Array<int>();
     public Godot.Collections.Array<int>? batRooms = new Godot.Collections.Array<int>();
@@ -49,6 +52,9 @@ public class GameState : Node {
 
     public void HandleCheckGameState() {
         EmitSignal("CheckGameState");
+        if (NumArrows < 1) {
+            GetNode<SceneManager>("/root/SceneManager").GotoEndScene(SceneManager.EndReason.Arrows);
+        }
         // handle if you should die / anything
     }
 

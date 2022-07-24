@@ -1,43 +1,41 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[sub_resource type="SpatialMaterial" id=1]
-flags_vertex_lighting = true
+[ext_resource path="res://assets/sky_seamless_texture_5904.jpg" type="Texture" id=1]
+[ext_resource path="res://scripts/UI/Quit.cs" type="Script" id=2]
 
-[sub_resource type="SpatialMaterial" id=2]
-flags_disable_ambient_light = true
-albedo_color = Color( 0.686275, 0.654902, 0.717647, 1 )
-roughness = 0.62
-clearcoat_enabled = true
-clearcoat = 0.83
-clearcoat_gloss = 0.67
+[sub_resource type="ShaderMaterial" id=1]
 
-[node name="Spatial" type="Spatial"]
+[node name="CanvasLayer" type="CanvasLayer"]
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -2.29011, 0.96429, -0.495452 )
-
-[node name="CSGBox" type="CSGBox" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-width = 7.454
-height = 1.593
-depth = 5.858
+[node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
 
-[node name="CSGBox" type="CSGBox" parent="CSGBox"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0460715, 1.58279, -2.70092 )
-width = 7.454
-height = 5.15782
-depth = 0.023
-material = SubResource( 2 )
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.0
+margin_top = -72.0
+margin_right = 40.0
+margin_bottom = 77.0
 
-[node name="CSGBox" type="CSGBox" parent="CSGBox/CSGBox"]
-transform = Transform( 0.0304862, 0, -0.999535, 0, 1, 0, 0.999535, 0, 0.0304862, 2.61414, -0.10704, 2.91418 )
-width = 7.454
-height = 4.79101
-depth = 0.023
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_right = 82.0
+margin_bottom = 72.0
+size_flags_vertical = 3
+text = "New Game"
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.5, 0.224144, -0.836516, 0, 0.965926, 0.258819, 0.866025, -0.12941, 0.482963, -1, 4, 6 )
-
-[node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 1920, 1080 )
+[node name="Button2" type="Button" parent="VBoxContainer"]
+margin_top = 76.0
+margin_right = 82.0
+margin_bottom = 149.0
+size_flags_vertical = 3
+text = "Quit"
+script = ExtResource( 2 )

@@ -13,17 +13,25 @@ public class CustButton : Godot.Button
             whatami = ShooterButtonAction.Clear;
         }
 
+        this.AddUserSignal("StateChanged");
+        this.Connect("StateChanged", GetNode("/root/GameState"), "HandleStateChanged");
+ 
+
         AddUserSignal("ShooterButtonTriggered");
 		this.Connect("ShooterButtonTriggered", GetParent().GetParent<Shooter>(), "HandleButtonSignal");
 
     }
 
     public void ButtonPressed() {
+        EmitSignal("StateChanged");
         EmitSignal("ShooterButtonTriggered", new Godot.Collections.Array{whatami});
     }
 
     public enum ShooterButtonAction {Shoot, Clear}
 
+
+    [Signal]
+    public delegate void StateChanged();
 
     [Signal]
     public delegate void ShooterButtonTriggered(ShooterButtonAction actn);

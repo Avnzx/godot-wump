@@ -20,6 +20,8 @@ class Shooter : CanvasLayer {
     public void Shoot() {
         if (GetParent<PathSelector>().selectedfaces.Contains(GetNode<GameState>("/root/GameState").CurrentMonsterRoom)) {
             GetNode<SceneManager>("/root/SceneManager").GotoEndScene(SceneManager.EndReason.Win);
+        } else {
+            GetNode<GameState>("/root/GameState").NumArrows -= 1;
         }
     }
     public void ClearShoot() {

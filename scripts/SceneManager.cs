@@ -75,12 +75,17 @@ public class SceneManager : Node {
     }
 
     public void GotoEndScene(EndReason endreason) {
-        CurrentScene?.QueueFree();
-        GD.Print("going to new end scene...", endreason);
+        GetNode<GameState>("/root/GameState").endReason = endreason;
+        GD.Print("going to new end scene... ", endreason);
+        DeferredGotoScene("res://scenes/end/End.tscn");
 
     }
 
-    public enum EndReason {Wumpus, Pit, Win}
+    public void Quit() {
+        System.Environment.Exit(0);
+    }
+
+    public enum EndReason {Wumpus, Pit, Win, Arrows}
 
     // public void gotoscene("res::pathToScene", string array scenes to destroy, bool destroy all scenes)
 
