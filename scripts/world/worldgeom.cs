@@ -88,10 +88,12 @@ public class worldgeom : Node
 
 		}
 
-		if(_gamestate.debugMode)
-			// GD.Print(_gamestate.CurrentPlayerRoom);
+		if(_gamestate.debugMode) {
+			GD.Print(_gamestate.CurrentPlayerRoom);
+		}
 
 		// flip next room
+		GD.Print("flipping next room");
 		_isflipped = !_isflipped;
 	}
 
